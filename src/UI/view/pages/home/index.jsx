@@ -1,53 +1,66 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
 import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
+import NavBar from "../../../component/molecules/navigation";
 
 const HomePage = () => {
+    // navBar state
+    const [isOpen, setNav] = useState(false);
     
+    const socials = [
+        {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
+        {icon: <AiOutlineLinkedin/>, to: 'https://www.linkedin.com/in/christofajosh/'},
+        {icon: <AiOutlineSkype/>, to: 'skype:christofajosh?chat'},
+    ];
     
     return (
         <StyleConsumer>
             {
                 ({siteColors}) => (
-                    <Landing {...siteColors}>
-                        <div className="header">
-                            <span className={'icons'}>logo</span>
-                            <div className={'hamburger icons'}>
-                                <span className={'line'}/>
-                                <span className={'line'}/>
-                                <span className={'line'}/>
-                            </div>
-                        </div>
-                        
-                        <section>
-                            <div className={'name-and-title'}>
-                                <p>JOSHUA CHRISTOPHER</p>
-                                <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
-                                
-                                <div className="scroll">
-                                    <p>scroll down</p>
+                    <>
+                        <NavBar isOpen={isOpen} {...siteColors}/>
+                        <Landing {...siteColors} isOpen={isOpen}>
+                            <div className="header">
+                                <span className={'icons'}>logo</span>
+                                <div className={'hamburger icons'} onClick={() => {setNav(!isOpen)}}>
+                                    <span className={'line'}/>
+                                    <span className={'line'}/>
                                     <span className={'line'}/>
                                 </div>
-                                
-                                <div className="socials">
-                                    <span><FiGithub/></span>
-                                    <span><AiOutlineLinkedin/></span>
-                                    <span><AiOutlineSkype/></span>
-                                </div>
                             </div>
-                        
-                        
-                        </section>
-                        
-                        <section>
-                            message
-                        </section>
-                        <section>
-                            recent jobs
-                        </section>
-                    </Landing>
+                            
+                            <section>
+                                <div className={'name-and-title'}>
+                                    <p>JOSHUA CHRISTOPHER</p>
+                                    <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
+                                    
+                                    <div className="scroll">
+                                        <p>scroll down</p>
+                                        <span className={'line'}/>
+                                    </div>
+                                    
+                                    <div className="socials" style={{cursor:'pointer', fontSize:'2rem'}}>
+                                        {
+                                            socials.map((el, index) => (
+                                                <a href={el.to}><span>{el.icon}</span></a>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            
+                            
+                            </section>
+                            
+                            <section>
+                                message
+                            </section>
+                            <section>
+                                recent jobs
+                            </section>
+                        </Landing>
+                    </>
                 )
             }
         </StyleConsumer>
@@ -64,33 +77,47 @@ background: ${props => props.white};
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     display: flex;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 5;
     
     .icons {
         padding: 0.5rem 1rem;
-        background: ${props => props.white};
+        background: ${props => props.isOpen ? 'transparent' : props.white};
+        
+        span:nth-child(1) {
+            transition: all 0.5s;
+            transform: ${props => props.isOpen ? 'rotate(40deg) translate(6px, 6px)' : null};
+        }
+        span:nth-child(3) {
+            transition: all 0.5s;
+            opacity: ${props => props.isOpen ? '0' : '1'};
+        }
+        
     }
     .hamburger {
         span {
             display: block;
             width: 23px;
             height: 2.5px;
-            background: ${props => props.black};
+            background: ${props => props.isOpen ? props.white : props.black};
             margin: 5.5px;
         }
+        
         span:nth-child(2){
-            width: 18px;
+            transition: all 0.3s;
             position: relative;
-            left: 5px;
+            width: ${props => props.isOpen ? '23px' : '18px'};
+            left: ${props => props.isOpen ? '0' : '5px'};
+            transform: ${props => props.isOpen ? 'rotate(-40deg) translate(-1px, 0px)' : null};
         }
     }
 }
 
 section:nth-child(2){
     position: relative;
-    padding: 1rem;
+    padding: 1.5rem;
     height: 100vh;
     background: url(${img});
     background-position: center center;
@@ -134,7 +161,7 @@ section:nth-child(3){
         content: " ";
         background: ${props => props.black};
         width: 100px;
-        height: 1px;
+        height: 2px;
         margin-left: 15px;
     }
 }
@@ -145,6 +172,7 @@ section:nth-child(3){
     position: absolute;
     flex-direction: row;
     justify-content: space-evenly;
+    font-size: 1.2.rem;
 }
 
 @media screen and (min-width: 1218px){
@@ -165,7 +193,8 @@ section:nth-child(3){
 @media screen and (max-width: 1218px) {
     .socials {
         bottom: 0;
-        width: 320px;
+        max-width: 320px;
+        width: 100%;
     }
 }
 

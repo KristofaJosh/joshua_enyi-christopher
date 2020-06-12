@@ -1,16 +1,13 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom'
+import NavBar from "../../../component/molecules/navigation";
 
 const ContactPage = () => {
     const history = useHistory();
     
-    setTimeout(() => {
-        // on mail success
-        history.push('/')
-    }, 13000);
-    
     return (
         <div>
+            <NavBar isOpen={true}/>
             contact page
         </div>
     );
