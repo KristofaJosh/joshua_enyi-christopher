@@ -8,6 +8,12 @@
   /*outline: 1px solid green;*/
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+
 
 body {
   margin: 0;
