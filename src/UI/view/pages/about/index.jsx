@@ -1,11 +1,13 @@
 import React from 'react';
 
-const HomeTemplate = () => {
+const AboutPage = () => {
+
+    
     return (
         <div>
-            
+            About page
         </div>
     );
 };
 
-export default HomeTemplate;
+export default AboutPage;

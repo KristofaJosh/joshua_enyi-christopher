@@ -1,11 +1,11 @@
 import React from 'react';
 
-const HomeTemplate = () => {
+const WorksPage = () => {
     return (
         <div>
-            
+            works page
         </div>
     );
 };
 
-export default HomeTemplate;
+export default WorksPage;

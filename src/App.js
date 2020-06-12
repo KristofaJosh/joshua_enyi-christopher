@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {lazy, Suspense} from 'react';
 import './styles/App.css';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import PageNotFound from "./UI/view/pages/error/404";
+
+const HomePage = lazy(() => import('./UI/view/pages/home'));
+const AboutPage = lazy(() => import('./UI/view/pages/about'));
+const ContactPage = lazy(() => import('./UI/view/pages/contact'));
+const WorksPage = lazy(() => import('./UI/view/pages/works'));
+
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <BrowserRouter>
+            <Suspense fallback={<div>'loading ...'</div>}>
+                <Switch>
+                    <Route exact path={'/'} component={HomePage}/>
+                    <Route path={'/about'} component={AboutPage}/>
+                    <Route path={'/contact'} component={ContactPage}/>
+                    <Route path={'/works'} component={WorksPage}/>
+                    <Route path={'*'} component={PageNotFound}/>
+                </Switch>
+            </Suspense>
+        </BrowserRouter>
     );
 }
 
