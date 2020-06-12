@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {StyleConsumer} from "../../../context";
 import styled from "styled-components";
-import {Link} from 'react-router-dom';
 
 const PageNotFound = () => {
     const [count, setCount] = useState(5);
@@ -13,9 +12,9 @@ const PageNotFound = () => {
         let counter = setTimeout(() => {
             // on mail success
             count > 1 ? setCount(count - 1) : history.push('/');
-
+            
         }, 1000);
-
+        
         return () => {
             clearTimeout(counter)
         }
@@ -72,8 +71,8 @@ align-items: center;
     button {
         padding: 0.6rem 2rem;
         border: none;
-        background: ${props=>props.black};
-        color:${props=>props.white};
+        background: ${props => props.black};
+        color:${props => props.white};
         text-transform: uppercase;
         max-width: 138px;
     }
