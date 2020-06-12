@@ -225,6 +225,7 @@ section:nth-child(3){
         > p {
             position: relative;
             left: 0px;
+            bottom: 88px;
             :nth-child(1){ font-size: 28px};
             :nth-child(2){ font-size: 1rem};
         }
