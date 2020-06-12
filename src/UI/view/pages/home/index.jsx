@@ -175,11 +175,15 @@ section:nth-child(3){
     font-size: 1.2.rem;
 }
 
+
+
 @media screen and (min-width: 1218px){
     .name-and-title {
         > p {
             position: relative;
-            left: 100px;
+            left: 150px;
+            :nth-child(1){ font-size: 45px};
+            :nth-child(2){ font-size: 20px};
         }
     }
     
@@ -190,7 +194,42 @@ section:nth-child(3){
 
 }
 
-@media screen and (max-width: 1218px) {
+@media screen and (min-width: 1920px){
+    .name-and-title {
+        > p {
+            position: relative;
+            left: 265px;
+            :nth-child(1){ font-size: 38px};
+            :nth-child(2){ font-size: 20px};
+        }
+    }
+   
+}
+
+@media screen and (min-width: 2560px){
+    .name-and-title {
+        > p {
+            position: relative;
+            left: 500px;
+            :nth-child(1){ font-size: 50px};
+            :nth-child(2){ font-size: 20px};
+        }
+    }
+   
+}
+
+
+
+@media screen and (max-width: 1797px) {
+    .name-and-title {
+        > p {
+            position: relative;
+            left: 0px;
+            :nth-child(1){ font-size: 28px};
+            :nth-child(2){ font-size: 1rem};
+        }
+    }
+    
     .socials {
         bottom: 0;
         max-width: 320px;
