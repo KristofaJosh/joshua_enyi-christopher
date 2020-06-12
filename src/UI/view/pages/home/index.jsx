@@ -4,10 +4,14 @@ import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
 import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
 import NavBar from "../../../component/molecules/navigation";
+import {motion, useTransform, useViewportScroll} from 'framer-motion'
 
 const HomePage = () => {
     // navBar state
     const [isOpen, setNav] = useState(false);
+    
+    const { scrollYProgress } = useViewportScroll()
+    const scale = useTransform(scrollYProgress, [0, 1], [0.2, 2]);
     
     const socials = [
         {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
@@ -36,12 +40,14 @@ const HomePage = () => {
                                     <p>JOSHUA CHRISTOPHER</p>
                                     <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
                                     
-                                    <div className="scroll">
+                                    <motion.div className="scroll"
+                                    
+                                    >
                                         <p>scroll down</p>
                                         <span className={'line'}/>
-                                    </div>
+                                    </motion.div>
                                     
-                                    <div className="socials" style={{cursor:'pointer', fontSize:'2rem'}}>
+                                    <div className="socials" style={{cursor:'pointer', fontSize:'1.3rem'}}>
                                         {
                                             socials.map((el, index) => (
                                                 <a href={el.to}><span>{el.icon}</span></a>
@@ -54,7 +60,17 @@ const HomePage = () => {
                             </section>
                             
                             <section>
-                                message
+
+                                <motion.div
+                                    style={{ scale }}
+                                >
+                                    <motion.div
+                                        style={{
+                                            scaleY: scrollYProgress
+                                        }}
+                                    />
+                                </motion.div>
+                                
                             </section>
                             <section>
                                 recent jobs
@@ -157,10 +173,12 @@ section:nth-child(3){
     align-items: center;
     width: max-content;
     
+    p {font-size: 0.75rem;}
+    
     ::after {
         content: " ";
         background: ${props => props.black};
-        width: 100px;
+        width: 70px;
         height: 2px;
         margin-left: 15px;
     }
@@ -272,7 +290,11 @@ section:nth-child(3){
 
 @media screen and (max-width: 804px){
     .scroll {
-        left: -80px;
+        left: -76px;
+        bottom: 87px;
+        ::after {
+            width: 57px;
+        }
     }
 }
 
