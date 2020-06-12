@@ -1,0 +1,2 @@
+(this.webpackJsonpjoshua_christopher=this.webpackJsonpjoshua_christopher||[]).push([[7],{50:function(e,s,t){"use strict";t.r(s);var r=t(0),n=t.n(r);s.default=function(){return n.a.createElement("div",null,"works page")}}}]);
+//# sourceMappingURL=7.e0e28a7a.chunk.js.map

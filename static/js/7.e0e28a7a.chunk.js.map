@@ -1,0 +1,1 @@
+{"version":3,"sources":["UI/view/pages/works/index.jsx"],"names":["WorksPage"],"mappings":"yHAAA,2BAUeA,UARG,WACd,OACI","file":"static/js/7.e0e28a7a.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst WorksPage = () => {\r\n    return (\r\n        <div>\r\n            works page\r\n        </div>\r\n    );\r\n};\r\n\r\nexport default WorksPage;"],"sourceRoot":""}
