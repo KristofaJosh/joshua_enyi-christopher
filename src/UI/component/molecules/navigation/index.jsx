@@ -31,7 +31,7 @@ const NavBar = ({isOpen, ...props}) => {
 };
 
 const Styling = styled.div`
-transition: all 0.5s;
+transition: ${props => props.state ? 'all 0.5s' : 'all 1.3s'};
 display: grid;
 grid-template-rows: 1fr 1fr 1fr 1fr;
 
