@@ -1,2 +1,2 @@
 (this.webpackJsonpjoshua_christopher=this.webpackJsonpjoshua_christopher||[]).push([[6],{49:function(t,e,n){"use strict";n.r(e);var s=n(0),c=n.n(s),u=n(1);e.default=function(){var t=Object(u.f)();return setTimeout((function(){t.push("/")}),13e3),c.a.createElement("div",null,"contact page")}}}]);
-//# sourceMappingURL=6.3c7e8f33.chunk.js.map
+//# sourceMappingURL=6.9e61fa96.chunk.js.map
