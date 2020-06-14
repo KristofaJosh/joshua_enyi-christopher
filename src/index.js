@@ -4,18 +4,15 @@ import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorBoundary from "./helpers/errorboundary";
-import {StyleProvider} from "./UI/context";
-import {Constant} from "./UI/constants";
-
-
+import ConstantProvider from "./UI/constants";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary>
-            <StyleProvider value={Constant}>
+            <ConstantProvider>
                 <App/>
-            </StyleProvider>
+            </ConstantProvider>
         </ErrorBoundary>
     </React.StrictMode>,
     document.getElementById('root')

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import PropTypes from 'prop-types';
 
 
-const NavBar = ({isOpen, ...props}) => {
+const Navigations = ({isOpen, toggleNav, ...props}) => {
     
     const menus = [
         {name: 'home', to: '/'},
@@ -12,28 +13,43 @@ const NavBar = ({isOpen, ...props}) => {
         {name: 'about', to: '/about'},
     ];
     
+   
     
     return (
         <>
             <Styling state={isOpen} {...props}>
+                <div/>
                 {
                     menus.map((el, index) => (
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                            <NavLink to={el.to} activeClassName={{color: 'red'}}>
-                                {el.name}
+                        <div className={'menus'}
+                             key={index}
+                             style={{
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 justifyContent: 'center',
+                                 textTransform: 'uppercase'
+                             }}>
+                            <NavLink exact to={el.to} activeClassName="active" >
+                                <span onClick={isOpen? toggleNav : null}>{el.name}</span>
                             </NavLink>
                         </div>
                     ))
                 }
+                <div/>
             </Styling>
         </>
     );
 };
 
+Navigations.propTypes = {
+    isOpen: PropTypes.bool,
+};
+
+
 const Styling = styled.div`
 transition: ${props => props.state ? 'all 0.5s' : 'all 1.3s'};
 display: grid;
-grid-template-rows: 1fr 1fr 1fr 1fr;
+grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
 
 position: fixed;
 z-index: 3;
@@ -42,12 +58,30 @@ width: 100%;
 
 transform: ${props => props.state ? 'translateX(0)' : 'translateX(-100vw)'};
 
+.active {
+    color: red;
+}
+
 div {
     height: 100%;
     width: 100vw;
     background: ${props => props.black};
     color: ${props => props.white};
     transform: ${props => props.state ? 'translateX(0)' : 'translateX(-100vw)'};
+    
+    a {
+        transition: all 1s;
+        font-size: 2rem;
+    }
+    &:hover {
+        a {
+            transform:scale(1.5);
+        }
+    }
+}
+
+.menus {
+
 }
 
 div:nth-child(1) {
@@ -62,7 +96,13 @@ div:nth-child(3) {
 div:nth-child(4) {
    transition: all 1.3s;
 }
+div:nth-child(5) {
+   transition: all 1.6s;
+}
+div:nth-child(6) {
+   transition: all 1.9s;
+}
 
 `;
 
-export default NavBar;
+export default Navigations;

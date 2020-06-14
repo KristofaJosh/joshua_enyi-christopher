@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
 import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
-import NavBar from "../../../component/molecules/navigation";
-import {motion, useTransform, useViewportScroll} from 'framer-motion'
+import {motion} from 'framer-motion'
+import Socials from "../../../component/molecules/socials";
+import Footer from "../../../component/organisms/footer";
 
 const HomePage = () => {
-    // navBar state
-    const [isOpen, setNav] = useState(false);
-    
-    const { scrollYProgress } = useViewportScroll()
-    const scale = useTransform(scrollYProgress, [0, 1], [0.2, 2]);
     
     const socials = [
         {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
@@ -24,58 +20,33 @@ const HomePage = () => {
             {
                 ({siteColors}) => (
                     <>
-                        <NavBar isOpen={isOpen} {...siteColors}/>
-                        <Landing {...siteColors} isOpen={isOpen}>
-                            <div className="header">
-                                <span className={'icons'}>logo</span>
-                                <div className={'hamburger icons'} onClick={() => {setNav(!isOpen)}}>
-                                    <span className={'line'}/>
-                                    <span className={'line'}/>
-                                    <span className={'line'}/>
-                                </div>
-                            </div>
+                        <Landing {...siteColors}>
                             
                             <section>
+                                <Socials links={socials}/>
+                                
                                 <div className={'name-and-title'}>
                                     <p>JOSHUA CHRISTOPHER</p>
                                     <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
-                                    
-                                    <motion.div className="scroll"
-                                    
-                                    >
+                                </div>
+                                
+                                <motion.div>
+                                    <div className="scroll">
                                         <p>scroll down</p>
                                         <span className={'line'}/>
-                                    </motion.div>
-                                    
-                                    <div className="socials" style={{cursor:'pointer', fontSize:'1.3rem'}}>
-                                        {
-                                            socials.map((el, index) => (
-                                                <a href={el.to}><span>{el.icon}</span></a>
-                                            ))
-                                        }
                                     </div>
-                                </div>
-                            
+                                </motion.div>
                             
                             </section>
                             
                             <section>
-
-                                <motion.div
-                                    style={{ scale }}
-                                >
-                                    <motion.div
-                                        style={{
-                                            scaleY: scrollYProgress
-                                        }}
-                                    />
-                                </motion.div>
-                                
+                                section 2
                             </section>
                             <section>
                                 recent jobs
                             </section>
                         </Landing>
+                        <Footer mobile/>
                     </>
                 )
             }
@@ -88,84 +59,35 @@ position: relative;
 width: 100%;
 background: ${props => props.white};
 
-
-.header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    z-index: 5;
-    
-    .icons {
-        padding: 0.5rem 1rem;
-        background: ${props => props.isOpen ? 'transparent' : props.white};
-        
-        span:nth-child(1) {
-            transition: all 0.5s;
-            transform: ${props => props.isOpen ? 'rotate(40deg) translate(6px, 6px)' : null};
-        }
-        span:nth-child(3) {
-            transition: all 0.5s;
-            opacity: ${props => props.isOpen ? '0' : '1'};
-        }
-        
-    }
-    .hamburger {
-        span {
-            display: block;
-            width: 23px;
-            height: 2.5px;
-            background: ${props => props.isOpen ? props.white : props.black};
-            margin: 5.5px;
-        }
-        
-        span:nth-child(2){
-            transition: all 0.3s;
-            position: relative;
-            width: ${props => props.isOpen ? '23px' : '18px'};
-            left: ${props => props.isOpen ? '0' : '5px'};
-            transform: ${props => props.isOpen ? 'rotate(-40deg) translate(-1px, 0px)' : null};
-        }
-    }
-}
-
-section:nth-child(2){
+section:nth-child(1){
     position: relative;
     padding: 1.5rem;
     height: 100vh;
     background: url(${img});
-    background-position: center center;
     background-repeat: no-repeat;
-}
+    background-position: calc(203px + 50%) 42px;
+    
+    .name-and-title {
+        position: relative;
+        top: 215px;
 
-section:nth-child(3){
-    padding: 1rem;
-    height: 100vh;
-}
-
-.name-and-title {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-
-    > p {
-        :nth-child(1){
-            font-size: 27px;
-            font-weight: 600;
+        > p {
+            :nth-child(1){
+                font-size: 27px;
+                font-weight: 600;
+            }
         }
     }
 }
 
-
+section:nth-child(2) {
+    padding: 1rem;
+    height: 100vh;
+}
 
 .scroll {
     display: flex;
-    bottom: 110px;
+    bottom: 89px;
     position: absolute;
     right: 0;
     transform: rotate(90deg);
@@ -185,120 +107,176 @@ section:nth-child(3){
 }
 
 
-.socials {
-    display: flex;
-    position: absolute;
-    flex-direction: row;
-    justify-content: space-evenly;
-    font-size: 1.2.rem;
-}
-
-
-
-@media screen and (min-width: 1218px){
-    .name-and-title {
-        > p {
+@media screen and (min-width: 1065px){
+    section:nth-child(1){
+        background-position: center center;
+        
+        .name-and-title {
             position: relative;
-            left: 150px;
-            :nth-child(1){ font-size: 45px};
-            :nth-child(2){ font-size: 20px};
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
         }
     }
-    
-    .socials {
-        flex-direction: column;
-        height: 40%;
-    }
-
 }
 
-@media screen and (min-width: 1920px){
-    .name-and-title {
-        > p {
-            position: relative;
-            left: 265px;
-            :nth-child(1){ font-size: 38px};
-            :nth-child(2){ font-size: 20px};
-        }
-    }
-   
-}
-
-@media screen and (min-width: 2560px){
-    .name-and-title {
-        > p {
-            position: relative;
-            left: 500px;
-            :nth-child(1){ font-size: 50px};
-            :nth-child(2){ font-size: 20px};
-        }
-    }
-   
-}
-
-
-
-@media screen and (max-width: 1797px) {
-    .name-and-title {
-        > p {
-            position: relative;
-            left: 0px;
-            bottom: 88px;
-            :nth-child(1){ font-size: 28px};
-            :nth-child(2){ font-size: 1rem};
-        }
-    }
-    
-    .socials {
-        bottom: 0;
-        max-width: 320px;
-        width: 100%;
+@media screen and (min-width: 1065px ){
+    section:nth-child(1){
+        background-position: center center;
     }
 }
 
 
-@media screen and (max-width: 1014px) {
-    
-    section:nth-child(2){
-        background-position: 300px center;
-    }
-    
-    .name-and-title {
-        > p {
-            :nth-child(1){
-                font-size: 25px;
-            }
-        }
-    }
-    
-}
-
-@media screen and (max-width: 900px){
-    .background-image {
-        background: blue;
-        img {
-            width: 80%;
-        }
-    }
-    
-    section:nth-child(2){
-        background-position: 250px center;
-    }
-    
-    
-}
-
-@media screen and (max-width: 804px){
+@media screen and (max-width: 928px){
     .scroll {
-        left: -76px;
-        bottom: 87px;
+        left: -38px;
+        bottom: 82px;
         ::after {
             width: 57px;
         }
     }
-}
+};
+
+@media screen and (max-width: 580px){
+    section:nth-child(1){
+        .name-and-title {
+             max-width: 200px;
+        }
+    }
+};
+
+
+@media screen and (max-height: 400px){
+    section:nth-child(1){
+        .name-and-title {
+            top: 125px;
+            left: 1.5rem;
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
 
 `;
+
+//
+// @media screen and (min-width: 1218px){
+//     .name-and-title {
+//         > p {
+//             position: relative;
+//             left: 150px;
+//             :nth-child(1){ font-size: 45px};
+//             :nth-child(2){ font-size: 20px};
+//         }
+//     }
+//
+//     .socials {
+//         flex-direction: column;
+//         height: 40%;
+//     }
+//
+// }
+
+//
+// @media screen and (min-width: 1920px){
+//     .name-and-title {
+//         > p {
+//             position: relative;
+//             left: 265px;
+//             :nth-child(1){ font-size: 38px};
+//             :nth-child(2){ font-size: 20px};
+//         }
+//     }
+//
+// }
+//
+// @media screen and (min-width: 2560px){
+//     .name-and-title {
+//         > p {
+//             position: relative;
+//             left: 500px;
+//             :nth-child(1){ font-size: 50px};
+//             :nth-child(2){ font-size: 20px};
+//         }
+//     }
+//
+// }
+//
+//
+//
+// @media screen and (max-width: 1797px) {
+//     .name-and-title {
+//         > p {
+//             position: relative;
+//             left: 0px;
+//             bottom: 88px;
+//             :nth-child(1){ font-size: 28px};
+//             :nth-child(2){ font-size: 1rem};
+//         }
+//     }
+//
+//     .socials {
+//         bottom: 0;
+//         max-width: 320px;
+//         width: 100%;
+//     }
+// }
+//
+//
+// @media screen and (max-width: 1014px) {
+//
+//     section:nth-child(2){
+//         background-position: 300px center;
+//     }
+//
+//     .name-and-title {
+//         > p {
+//             :nth-child(1){
+//                 font-size: 25px;
+//             }
+//         }
+//     }
+//
+// }
+//
+// @media screen and (max-width: 900px){
+//     .background-image {
+//         background: blue;
+//         img {
+//             width: 80%;
+//         }
+//     }
+//
+//     section:nth-child(2){
+//         background-position: 250px center;
+//     }
+//
+//
+// }
+//
+// @media screen and (max-width: 804px){
+//     .scroll {
+//         left: -76px;
+//         bottom: 87px;
+//         ::after {
+//             width: 57px;
+//         }
+//     }
+// }
+//
+// `;
 
 
 export default HomePage;
