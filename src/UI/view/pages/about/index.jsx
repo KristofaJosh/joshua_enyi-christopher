@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ContentTemplate from "../../template/content.template";
 import Button from "../../../component/atoms/button";
 import styled from "styled-components";
@@ -6,13 +6,24 @@ import {siteColors} from "../../../constants/siteColors";
 
 const AboutPage = () => {
     
+    const [loading, setLoading] = useState(false);
+    
+    const downloadResume = () => {
+        setLoading(true);
+        
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
+    };
+    
+    
     return (
         <ContentTemplate>
             <Styling>
                 
                 <div className={'introduction'}>
                     <p>Hi, i'm joshua.</p>
-                    <div style={{position: 'relative', background: siteColors.white, zIndex:'2'}}>
+                    <div style={{position: 'relative', background: siteColors.white, zIndex: '2'}}>
                         <p>a passionate software engineer</p>
                     </div>
                 </div>
@@ -26,18 +37,19 @@ const AboutPage = () => {
                         Hi there, my name is Joshua Enyi-Christopher, I am a fullstack developer (Python/React Stack).
                         I have an utmost passion for solving problems. I am very much interested in taking complex
                         problems and simplifying it maybe automate it too.
-                        I graduated from Babcock University with a degree in Bachelors of science in Computer Information Systems
+                        I graduated from Babcock University with a degree in Bachelors of science in Computer
+                        Information Systems
                     </p>
                     
                     
                     <div className={'buttons'} style={{margin: '1rem 0'}}>
-                        <Button isLoading={true} primary>get my resume</Button>
-                        <Button  secondary>view my works</Button>
+                        <Button onClick={downloadResume} isLoading={loading} primary>get my resume</Button>
+                        <Button to={'/works'} secondary>view my works</Button>
                     </div>
-                    
+                
                 </div>
-                
-                
+            
+            
             </Styling>
         </ContentTemplate>
     );
