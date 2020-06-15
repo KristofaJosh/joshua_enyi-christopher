@@ -3,16 +3,17 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import {siteColors} from "../../../constants/siteColors";
+import {PulseLoader} from "react-spinners";
 
-const Button = ({to, children, isLoading, ...props}) => {
+const Button = ({to, children, isLoading, onClick, ...props}) => {
     
     return (
         <Styling {...props} onClick={onClick}>
-            <Link to={to}>
-                {
-                    isLoading ? 'loading' : children
-                }
-            </Link>
+            {isLoading ? <PulseLoader/> : !to ?
+                children :
+                <Link to={to}>
+                    {children}
+                </Link>}
         </Styling>
     );
 };
@@ -39,6 +40,7 @@ const Styling = styled.button`
 text-transform: uppercase;
 padding: 1rem 1.5rem;
 font-weight: 700;
+cursor: pointer;
 ${ButtonType};
 `;
 

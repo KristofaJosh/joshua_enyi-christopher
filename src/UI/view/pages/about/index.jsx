@@ -31,8 +31,8 @@ const AboutPage = () => {
                     
                     
                     <div className={'buttons'} style={{margin: '1rem 0'}}>
-                        <Button primary>get my resume</Button>
-                        <Button secondary>view my works</Button>
+                        <Button  primary>get my resume</Button>
+                        <Button isLoading={true} secondary>view my works</Button>
                     </div>
                     
                 </div>
