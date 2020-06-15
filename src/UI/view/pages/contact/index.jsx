@@ -90,6 +90,7 @@ grid-template-areas:
             padding: 1rem;
             text-indent: 10px;
         }
+        
         input:nth-child(1){
             text-transform: capitalize;
         }
@@ -98,15 +99,18 @@ grid-template-areas:
             resize: vertical;
             height: 200px;
         }
+        
     }
     
 
 }
 
 @media screen and (max-width: 900px){
+
     .message {
         flex-direction: column;
     }
+    
     .description {
         p {
             :nth-child(1){

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import {StyleConsumer} from "../../../context";
 import Button from "../../atoms/button";
-import Socials from "../../molecules/socials";
 
 const Footer = ({mobile}) => {
     

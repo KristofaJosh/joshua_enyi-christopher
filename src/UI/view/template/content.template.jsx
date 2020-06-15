@@ -19,7 +19,7 @@ const ContentTemplate = ({children}) => {
             </div>
     
             <div className="footer">
-                <Footer mobile/>
+                {/*<Footer mobile/>*/}
             </div>
             
             <div className="scroll" onClick={goBack}>

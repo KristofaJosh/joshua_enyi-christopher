@@ -15,17 +15,17 @@ const WorksPage = lazy(() => import('./UI/view/pages/works'));
 function App() {
     
     
-    
     return (
         <>
             <BrowserRouter>
                 <NavBar/>
-                <Suspense fallback={
-                    <div
-                    style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-                    <ClimbingBoxLoader/>
-                </div>
-                }>
+                <Suspense
+                    fallback={
+                        <div
+                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                            <ClimbingBoxLoader/>
+                        </div>
+                    }>
                     <Switch>
                         <Route exact path={'/'} component={HomePage}/>
                         <Route path={'/about'} component={AboutPage}/>

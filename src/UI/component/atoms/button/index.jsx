@@ -4,12 +4,14 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 import {siteColors} from "../../../constants/siteColors";
 
-const Button = ({to, children, ...props}) => {
+const Button = ({to, children, isLoading, ...props}) => {
     
     return (
-        <Styling {...props}>
+        <Styling {...props} onClick={onClick}>
             <Link to={to}>
-                {children}
+                {
+                    isLoading ? 'loading' : children
+                }
             </Link>
         </Styling>
     );
