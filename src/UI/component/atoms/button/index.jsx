@@ -13,7 +13,7 @@ const Button = ({to, children, isLoading, onClick, ...props}) => {
             {isLoading ? <PulseLoader
                 css={'display: block; margin: auto auto; border-color: red;'} size={9}
                 color={!props.primary ? siteColors.white : siteColors.black}/> : !to ?
-                children g
+                children :
                 <Link to={to}>
                     {children}
                 </Link>}
