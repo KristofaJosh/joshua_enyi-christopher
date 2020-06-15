@@ -7,10 +7,13 @@ import {PulseLoader} from "react-spinners";
 
 const Button = ({to, children, isLoading, onClick, ...props}) => {
     
+    
     return (
         <Styling {...props} onClick={onClick}>
-            {isLoading ? <PulseLoader/> : !to ?
-                children :
+            {isLoading ? <PulseLoader
+                css={'display: block; margin: auto auto; border-color: red;'} size={9}
+                color={!props.primary ? siteColors.white : siteColors.black}/> : !to ?
+                children g
                 <Link to={to}>
                     {children}
                 </Link>}
@@ -49,6 +52,8 @@ Button.propTypes = {
     children: PropTypes.string.isRequired,
     primary: PropTypes.any,
     secondary: PropTypes.any,
+    isLoading: PropTypes.bool,
+    onClick: PropTypes.instanceOf(Function),
 };
 
 export default Button;
