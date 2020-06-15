@@ -8,12 +8,9 @@
   /*outline: 1px solid green;*/
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  font-size: inherit;
+html, body {
+  height: 100%;
 }
-
 
 body {
   margin: 0;
@@ -22,9 +19,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*#root {*/
-/*  position: relative;*/
-/*  max-width: 1140px;*/
-/*  width: 100%;*/
-/*  margin: auto;*/
-/*}*/
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+#root {
+  height: 100%;
+  position: relative;
+  max-width: 1140px;
+  width: 100%;
+  margin: auto;
+}

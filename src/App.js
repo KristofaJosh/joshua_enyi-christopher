@@ -5,6 +5,7 @@ import PageNotFound from "./UI/view/pages/error/404";
 import {ClimbingBoxLoader} from "react-spinners";
 import NavBar from "./UI/component/organisms/navbar";
 
+
 const HomePage = lazy(() => import('./UI/view/pages/home'));
 const AboutPage = lazy(() => import('./UI/view/pages/about'));
 const ContactPage = lazy(() => import('./UI/view/pages/contact'));
@@ -18,11 +19,11 @@ function App() {
     return (
         <>
             <BrowserRouter>
+                <NavBar/>
                 <Suspense fallback={<div
                     style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                     <ClimbingBoxLoader/>
                 </div>}>
-                    <NavBar/>
                     <Switch>
                         <Route exact path={'/'} component={HomePage}/>
                         <Route path={'/about'} component={AboutPage}/>

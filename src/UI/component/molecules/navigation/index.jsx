@@ -24,11 +24,15 @@ const Navigations = ({isOpen, toggleNav, ...props}) => {
                         <div className={'menus'}
                              key={index}
                              style={{
+                                 position: 'relative',
                                  display: 'flex',
                                  alignItems: 'center',
                                  justifyContent: 'center',
                                  textTransform: 'uppercase'
                              }}>
+                            <span className={'active-index'}>
+                                {'0'+(index+ 1)}
+                            </span>
                             <NavLink exact to={el.to} activeClassName="active" >
                                 <span onClick={isOpen? toggleNav : null}>{el.name}</span>
                             </NavLink>
@@ -59,8 +63,11 @@ width: 100%;
 transform: ${props => props.state ? 'translateX(0)' : 'translateX(-100vw)'};
 
 .active {
-    color: red;
+    color: ${props=>props.white};
+    font-weight: 700;
 }
+
+
 
 div {
     height: 100%;
@@ -69,13 +76,26 @@ div {
     color: ${props => props.white};
     transform: ${props => props.state ? 'translateX(0)' : 'translateX(-100vw)'};
     
+    .active-index {
+        transition: all 1.5s;
+        position: absolute;
+        font-size: 8rem;
+        opacity: 0.24;
+    }
+    
     a {
         transition: all 1s;
         font-size: 2rem;
     }
+    
     &:hover {
         a {
             transform:scale(1.5);
+        }
+        .active-index {
+            display: block;
+            font-size: 5rem;
+            opacity: 0.12;
         }
     }
 }

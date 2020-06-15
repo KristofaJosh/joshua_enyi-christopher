@@ -1,15 +1,22 @@
 import React, {useContext} from 'react';
 import styled from "styled-components";
 import StyleContext from "../../../context";
+import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
 
-const Socials = ({links, ...props}) => {
+const Socials = ({...props}) => {
     const {siteColors, navState} = useContext(StyleContext);
+    
+    const socials = [
+        {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
+        {icon: <AiOutlineLinkedin/>, to: 'https://www.linkedin.com/in/christofajosh/'},
+        {icon: <AiOutlineSkype/>, to: 'skype:christofajosh?chat'},
+    ];
     
     return (
         <Styling {...props} isOpen={navState} {...siteColors}>
             {
-                links.map((el, index) => (
-                    <a href={el.to} key={index}><span>{el.icon}</span></a>
+                socials.map((el, index) => (
+                    <a href={el.to} target="_blank"  rel="noopener noreferrer" key={index}><span>{el.icon}</span></a>
                 ))
             }
         </Styling>

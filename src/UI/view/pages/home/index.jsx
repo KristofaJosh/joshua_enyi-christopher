@@ -2,18 +2,11 @@ import React from 'react';
 import styled from "styled-components";
 import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
-import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
 import {motion} from 'framer-motion'
 import Socials from "../../../component/molecules/socials";
 import Footer from "../../../component/organisms/footer";
 
 const HomePage = () => {
-    
-    const socials = [
-        {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
-        {icon: <AiOutlineLinkedin/>, to: 'https://www.linkedin.com/in/christofajosh/'},
-        {icon: <AiOutlineSkype/>, to: 'skype:christofajosh?chat'},
-    ];
     
     return (
         <StyleConsumer>
@@ -23,7 +16,7 @@ const HomePage = () => {
                         <Landing {...siteColors}>
                             
                             <section>
-                                <Socials links={socials}/>
+                                <Socials/>
                                 
                                 <div className={'name-and-title'}>
                                     <p>JOSHUA CHRISTOPHER</p>
@@ -46,7 +39,12 @@ const HomePage = () => {
                                 recent jobs
                             </section>
                         </Landing>
-                        <Footer mobile/>
+                        {
+                            window.innerWidth < 900 ?
+                                <Footer mobile/>
+                                :
+                                <Footer/>
+                        }
                     </>
                 )
             }

@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
 import styled from "styled-components";
-import {Link} from "react-router-dom";
 import StyleContext from "../../../context";
+import Button from "../../atoms/button";
+import Socials from "../../molecules/socials";
 
 const Footer = ({mobile}) => {
     
@@ -15,18 +16,20 @@ const Footer = ({mobile}) => {
                     <>
                         <p style={{fontSize: '50px'}}>Let's talk!</p>
                         <p style={{fontFamily: 'Inter'}}>I am available for freelance</p>
-                        <button>
-                            <Link to={'/contact'}>
-                                contact me
-                            </Link>
-                        </button>
+                        <Button to={'/contact'} secondary>contact me</Button>
                         <p style={{textTransform: 'uppercase', fontSize: '11px', marginTop: '4rem'}}>
                             Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
                         </p>
                     </>
                     :
                     <>
-                        <p style={{textTransform: 'uppercase', fontSize: '11px', marginTop: '4rem', fontWeight: 'bold'}}>
+                        <div style={{width: '100%', margin: '0 auto'}}><Socials/></div>
+                        <p style={{
+                            textTransform: 'uppercase',
+                            fontSize: '11px',
+                            marginTop: '4rem',
+                            fontWeight: 'bold'
+                        }}>
                             Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
                         </p>
                     </>
@@ -45,17 +48,6 @@ p {
     margin: ${props => props.m ? null : '1.5rem 0'};;
     padding: ${props => props.m ? '0.7rem 0' : null};;
 }
-
-
-button {
-    background: ${props => props.black};
-    text-transform: uppercase;
-    padding: 1rem 1.5rem;
-    color: ${props => props.white};
-    border: 1.5px solid ${props => props.white};
-}
-
-
 `;
 
 export default Footer;
