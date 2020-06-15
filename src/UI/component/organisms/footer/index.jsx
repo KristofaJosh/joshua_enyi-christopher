@@ -1,40 +1,42 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styled from "styled-components";
-import StyleContext from "../../../context";
+import {StyleConsumer} from "../../../context";
 import Button from "../../atoms/button";
 import Socials from "../../molecules/socials";
 
 const Footer = ({mobile}) => {
     
-    const {siteColors} = useContext(StyleContext);
-    
     
     return (
-        <Styling {...siteColors} m={mobile}>
-            {
-                !mobile ?
-                    <>
-                        <p style={{fontSize: '50px'}}>Let's talk!</p>
-                        <p style={{fontFamily: 'Inter'}}>I am available for freelance</p>
-                        <Button to={'/contact'} secondary>contact me</Button>
-                        <p style={{textTransform: 'uppercase', fontSize: '11px', marginTop: '4rem'}}>
-                            Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
-                        </p>
-                    </>
-                    :
-                    <>
-                        <div style={{width: '100%', margin: '0 auto'}}><Socials/></div>
-                        <p style={{
-                            textTransform: 'uppercase',
-                            fontSize: '11px',
-                            marginTop: '4rem',
-                            fontWeight: 'bold'
-                        }}>
-                            Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
-                        </p>
-                    </>
-            }
-        </Styling>
+        <StyleConsumer>
+            {({siteColors,}) => (
+                <Styling {...siteColors} m={mobile}>
+                    {
+                        !mobile ?
+                            <>
+                                <p style={{fontSize: '50px'}}>Let's talk!</p>
+                                <p style={{fontFamily: 'Inter'}}>I am available for freelance</p>
+                                <Button to={'/contact'} secondary>contact me</Button>
+                                <p style={{textTransform: 'uppercase', fontSize: '11px', marginTop: '4rem'}}>
+                                    Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
+                                </p>
+                            </>
+                            :
+                            <>
+                                {/*<Socials style={{width: '100%', position: 'relative'}}/>*/}
+                                <p style={{
+                                    textTransform: 'uppercase',
+                                    fontSize: '11px',
+                                    padding: '1rem',
+                                    fontWeight: 'bold'
+                                }}>
+                                    Copyright &copy; joshua enyi-christopher {new Date().getFullYear()}
+                                </p>
+                            </>
+                    }
+                </Styling>
+            )}
+        </StyleConsumer>
     );
 };
 

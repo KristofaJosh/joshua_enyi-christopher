@@ -35,7 +35,7 @@ flex-direction:  ${props=>props.isOpen ? 'column' : 'row'};
 justify-content: space-between;
 font-size: 1.2rem;
 cursor: pointer;
-z-index: ${props=>props.isOpen ? '3' : null};
+z-index: ${props=>props.isOpen ? '3' : '2'};
 color: ${props=>props.isOpen ? props.white : props.black };
 
 max-width: 200px;

@@ -90,6 +90,10 @@ grid-template-areas:
             padding: 1rem;
             text-indent: 10px;
         }
+        input:nth-child(1){
+            text-transform: capitalize;
+        }
+        
         textarea {
             resize: vertical;
             height: 200px;

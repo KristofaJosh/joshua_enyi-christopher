@@ -28,7 +28,5 @@ a {
 #root {
   height: 100%;
   position: relative;
-  max-width: 1140px;
   width: 100%;
-  margin: auto;
 }

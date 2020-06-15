@@ -20,10 +20,12 @@ function App() {
         <>
             <BrowserRouter>
                 <NavBar/>
-                <Suspense fallback={<div
+                <Suspense fallback={
+                    <div
                     style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                     <ClimbingBoxLoader/>
-                </div>}>
+                </div>
+                }>
                     <Switch>
                         <Route exact path={'/'} component={HomePage}/>
                         <Route path={'/about'} component={AboutPage}/>
