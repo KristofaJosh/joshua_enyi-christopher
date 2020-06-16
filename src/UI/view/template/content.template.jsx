@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {useLocation, useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {siteColors} from "../../constants/siteColors";
-import Footer from "../../component/organisms/footer";
 
 
 const ContentTemplate = ({children}) => {
@@ -13,11 +12,11 @@ const ContentTemplate = ({children}) => {
     
     return (
         <Styling {...siteColors}>
-            <span className={'page-name'}>{pathname.replace('/','')}</span>
+            <span className={'page-name'}>{pathname.replace('/', '')}</span>
             <div className="content">
                 {children}
             </div>
-    
+            
             <div className="footer">
                 {/*<Footer mobile/>*/}
             </div>
@@ -35,7 +34,7 @@ width: 100%;
 min-height: 100vh;
 height: 100%;
 
-background: ${props=>props.white};
+background: ${props => props.white};
 
 display: flex;
 flex-direction: column;
@@ -71,7 +70,7 @@ align-items: center;
     
     ::before {
         content: " ";
-        background: ${props=>props.black};
+        background: ${props => props.black};
         width: 70px;
         height: 2px;
         margin-right: 15px;

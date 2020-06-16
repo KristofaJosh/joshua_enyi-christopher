@@ -11,6 +11,7 @@ const HomePage = lazy(() => import('./UI/view/pages/home'));
 const AboutPage = lazy(() => import('./UI/view/pages/about'));
 const ContactPage = lazy(() => import('./UI/view/pages/contact'));
 const WorksPage = lazy(() => import('./UI/view/pages/works'));
+const ProjectDetails = lazy(() => import("./UI/view/pages/project_details"));
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                         <Route path={'/about'} component={AboutPage}/>
                         <Route path={'/contact'} component={ContactPage}/>
                         <Route path={'/works'} component={WorksPage}/>
+                        <Route path={'/about_project'} component={ProjectDetails}/>
                         <Route path={'*'} component={PageNotFound}/>
                     </Switch>
                 </Suspense>

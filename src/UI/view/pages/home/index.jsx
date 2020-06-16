@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
-import {motion} from 'framer-motion'
 import Socials from "../../../component/molecules/socials";
 import Footer from "../../../component/organisms/footer";
 
@@ -17,19 +16,15 @@ const HomePage = () => {
                             
                             <section>
                                 <Socials/>
-                                
                                 <div className={'name-and-title'}>
                                     <p>JOSHUA CHRISTOPHER</p>
                                     <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
                                 </div>
                                 
-                                <motion.div>
-                                    <div className="scroll">
-                                        <p>scroll down</p>
-                                        <span className={'line'}/>
-                                    </div>
-                                </motion.div>
-                            
+                                <div className="scroll">
+                                    <p>scroll down</p>
+                                    <span className={'line'}/>
+                                </div>
                             </section>
                             
                             <section>
@@ -92,6 +87,9 @@ section:nth-child(2) {
     justify-content: center;
     align-items: center;
     width: max-content;
+    animation: scroll 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
     
     p {font-size: 0.75rem;}
     
@@ -102,6 +100,11 @@ section:nth-child(2) {
         height: 2px;
         margin-left: 15px;
     }
+}
+
+@keyframes scroll {
+  from {bottom: 99px;}
+  to {bottom: 89px;}
 }
 
 

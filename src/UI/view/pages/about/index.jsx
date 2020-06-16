@@ -41,15 +41,17 @@ const AboutPage = () => {
                 <div className="about-me">
                     <p>
                         Hi there, my name is Joshua Enyi-Christopher, I am a Well-organised person, problem solver with
-                        high attention to detail. I have extensive programming experience and comfortable with both frontend
-                        and backend, picking up another language is not a problem for me, although I primarily use React and
+                        high attention to detail. I have extensive programming experience and comfortable with both
+                        frontend
+                        and backend, picking up another language is not a problem for me, although I primarily use React
+                        and
                         Python for most jobs.
                     </p>
                     
                     
                     <div className={'buttons'} style={{margin: '1rem 0'}}>
                         <span style={{display: 'none'}}>
-                            <a href={resume} ref={clickATag} target="_blank" rel="noopener noreferrer" download/>
+                            <a href={resume} ref={clickATag} target="_blank" rel="noopener noreferrer" download>''</a>
                         </span>
                         <Button onClick={downloadResume} isLoading={loading} primary>get my resume</Button>
                         <Button to={'/works'} secondary>view my works</Button>

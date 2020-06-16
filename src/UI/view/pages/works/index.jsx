@@ -1,82 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import ContentTemplate from "../../template/content.template";
 import WorksTemplate from "../../template/works.template";
 import WorksCard from "../../../component/molecules/workcard";
 import axios from 'axios';
 import {logErrorToMyService} from "../../../../helpers/errorReport";
+import Placeholder from "../../../component/molecules/placeholder";
+import Text from "../../../component/atoms/typography";
+import StyleContext from "../../../context";
 
 const WorksPage = () => {
-    const [worksData, setWorksData] = useState([]);
+    const {dispatch, store: {worksData}} = useContext(StyleContext);
     
-    
-    useEffect(()=>{
+    useEffect(() => {
         axios({
             method: 'GET',
-            url: 'https://chrisjoshportfolio.herokuapp.com/jobs',
-        }).then((resp)=>{
-            console.log(resp.data)
-            setWorksData(resp.data)
-        }).catch((err)=>logErrorToMyService(err))
+            url: 'https://chrisjoshportfolio.herokuapp.com/jobs/',
+            
+        }).then((resp) => {
+            dispatch({type: 'setWorks', data: resp.data})
+        }).catch((err) => logErrorToMyService(err))
     }, []);
-
-    
-    
-    const placeholders = [
-        {
-            "name": "The name",
-            "project_snapshot": "http://res.cloudinary.com/webweavers/image/upload/w_400//v1592262361/MyPorfolio/webproject_snapshot/evxwwkgk7ayf5fwjzkzp.png",
-            "description": "the description",
-            "tools": "ruby python html5 angularjs css3 react typescript javascript ruby python html5 css3 react typescript javascript csharp cplusplus mongodb django php mysql",
-            "link": "https://joshuachristopher.netlify.com",
-            "repository": "the repo"
-        },
-        {
-            "name": "The name",
-            "project_snapshot": "http://res.cloudinary.com/webweavers/image/upload/w_400//v1592262361/MyPorfolio/webproject_snapshot/evxwwkgk7ayf5fwjzkzp.png",
-            "description": "the description",
-            "tools": "ruby python html5 angularjs css3 react typescript ruby python html5 angularjs css3 react typescript javascript ruby python html5 css3 react typescript javascript csharp cplusplus mongodb django php mysql",
-            "link": "https://joshuachristopher.netlify.com",
-            "repository": "the repo"
-        },
-
-    ]
-    
-    
-    
-    
     
     
     return (
         <ContentTemplate>
             <div>
-                <p>recent works</p>
+                <Text heading noBold capitalize>recent works</Text>
                 <WorksTemplate>
                     {
                         worksData.length < 1 ?
-                            'placeholder'
-                            :
-                        worksData.map((el, index) => (
-                            <WorksCard
-                                key={index}
-                                id={index}
-                                name={el.name}
-                                image={el.project_snapshot}
-                                url={el.link}
-                                repo_url={el.repository}
-                                tools={el.tools}
-                                about={el.description}
-                            />
-                        ))
-                    }
-                </WorksTemplate>
-            </div>
-            
-            <div>
-                <p>all works</p>
-                <WorksTemplate>
-                    {
-                        worksData.length < 1 ?
-                            'fetching...'
+                            <Placeholder spread={4}/>
                             :
                             worksData.map((el, index) => (
                                 <WorksCard
@@ -93,7 +46,30 @@ const WorksPage = () => {
                     }
                 </WorksTemplate>
             </div>
-    
+            
+            <div>
+                <Text capitalize noBold heading>all works</Text>
+                <WorksTemplate>
+                    {
+                        worksData.length < 1 ?
+                            <Placeholder spread={6}/>
+                            :
+                            worksData.map((el, index) => (
+                                <WorksCard
+                                    key={index}
+                                    id={index}
+                                    name={el.name}
+                                    image={el.project_snapshot}
+                                    url={el.link}
+                                    repo_url={el.repository}
+                                    tools={el.tools}
+                                    about={el.description}
+                                />
+                            ))
+                    }
+                </WorksTemplate>
+            </div>
+        
         </ContentTemplate>
     );
 };

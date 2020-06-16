@@ -1,19 +1,23 @@
-import React, {useState} from 'react';
+import React, {useContext, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
 import {siteColors} from "../../../constants/siteColors";
-import {MdWeb, FiGithub, BsInfoCircle} from "react-icons/all";
+import {BsInfoCircle, FiGithub, MdWeb} from "react-icons/all";
+import {useHistory} from 'react-router-dom';
+import StyleContext from "../../../context";
 
 const WorksCard = ({name, id, image, url, repo_url, tools, about}) => {
     
-    const [isFlipped, setFlipped] = useState(false);
+    const {dispatch} = useContext(StyleContext);
     
-    // console.log(tools)
+    
+    
+    const history = useHistory();
     
     const goto = (id) => {
-        console.log(id);
-        setFlipped(true);
+        history.push('/about_project', {id: id});
     };
+    
     
     return (
         <Styling>
@@ -22,21 +26,28 @@ const WorksCard = ({name, id, image, url, repo_url, tools, about}) => {
                 <img src={image} alt=""/>
                 
                 <div className="project-details">
+                    
                     <p>{name}</p>
                     
                     <span className={'web-details'}>
-                        <p onClick={()=>{goto(id)}}><BsInfoCircle/></p>
-                        <p><a href={repo_url} target={'_blank'}  rel="noopener noreferrer"><FiGithub/></a></p>
-                        <p><a href={url} target={'_blank'}  rel="noopener noreferrer"><MdWeb/></a></p>
+                        <p onClick={
+                            () => {
+                                dispatch({type: 'getWork', id: id});
+                                goto(id);
+                            }
+                        }><BsInfoCircle/></p>
+                        <p><a href={repo_url} target={'_blank'} rel="noopener noreferrer"><FiGithub/></a></p>
+                        <p><a href={url} target={'_blank'} rel="noopener noreferrer"><MdWeb/></a></p>
                     </span>
                     
-                    <span className={'tools'}>{tools.split(' ').map(el=>(
-                        <i  className={"devicon-" + el + "-plain"}/>
+                    <span className={'tools'}>{tools.split(' ').map((el, index) => (
+                        <i key={index} className={"devicon-" + el + "-plain"}/>
                     ))}</span>
+                
                 </div>
             </div>
-            
-            
+        
+        
         </Styling>
     );
 };
@@ -57,11 +68,11 @@ display: flex;
 align-items: center;
 justify-content: center;
 overflow: hidden;
-
 border: 0.5px solid #2013130a;
 
 .web-image {
     position: relative;
+    height: 100%;
     
     img {
         width: 100%;

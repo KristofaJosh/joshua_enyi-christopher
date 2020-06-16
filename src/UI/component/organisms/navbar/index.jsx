@@ -6,21 +6,21 @@ import Navigations from "../../molecules/navigation";
 import {Link} from "react-router-dom";
 
 const NavBar = () => {
-    const {siteColors, toggleNav, navState} = useContext(StyleContext);
+    const {siteColors, dispatch, store:{isOpen}} = useContext(StyleContext);
     
     return (
         <>
-            <Navigations isOpen={navState} toggleNav={toggleNav} {...siteColors}/>
-            <Styling {...siteColors} isOpen={navState}>
+            <Navigations isOpen={isOpen} toggleNav={()=>dispatch({type:'toggleNav'})} {...siteColors}/>
+            <Styling {...siteColors} isOpen={isOpen}>
                 <Link to={'/'}>
                     <div className={'box'}>
-                        {navState ? <img style={{width: '100%'}} src={"/assets/images/logo_w.png"} alt=""/> :
+                        {isOpen ? <img style={{width: '100%'}} src={"/assets/images/logo_w.png"} alt=""/> :
                             <img style={{width: '100%'}} src={"/assets/images/logo_b.png"} alt=""/>
                         }
                     </div>
                 </Link>
                 <div className={'box'}>
-                    <Hamburger isOpen={navState} onClick={toggleNav} {...siteColors}/>
+                    <Hamburger isOpen={isOpen} onClick={()=>dispatch({type:'toggleNav'})} {...siteColors}/>
                 </div>
             </Styling>
         </>

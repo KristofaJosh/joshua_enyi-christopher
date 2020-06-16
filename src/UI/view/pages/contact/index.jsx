@@ -50,8 +50,8 @@ const ContactPage = () => {
                     <div className="contact-info">
                         {
                             contacts.map((el, index) => (
-                                <a href={el.link} target={'_blank'} rel="noopener noreferrer">
-                                    <div key={index} style={{margin: '1.5rem 0', fontWeight: '600'}}>
+                                <a href={el.link} target={'_blank'} rel="noopener noreferrer" key={index}>
+                                    <div style={{margin: '1.5rem 0', fontWeight: '600'}}>
                                         <p><span
                                             style={{marginRight: '10px'}}>{el.icon}</span>{" "}<span>{el.detail}</span>
                                         </p>

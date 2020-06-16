@@ -9,15 +9,34 @@ const Button = ({to, children, isLoading, onClick, ...props}) => {
     
     
     return (
-        <Styling {...props} onClick={onClick}>
-            {isLoading ? <PulseLoader
-                css={'display: block; margin: auto auto; border-color: red;'} size={9}
-                color={!props.primary ? siteColors.white : siteColors.black}/> : !to ?
-                children :
+        <>
+            {to ?
                 <Link to={to}>
-                    {children}
-                </Link>}
-        </Styling>
+                    <Styling {...props} onClick={onClick}>
+                        {isLoading ?
+                            <PulseLoader
+                                css={'display: block; margin: auto auto; border-color: red;'}
+                                size={9} color={!props.primary ? siteColors.white : siteColors.black}
+                            />
+                            :
+                            children
+                        }
+                    </Styling>
+                </Link>
+                :
+                <Styling {...props} onClick={onClick}>
+                    {isLoading ?
+                        <PulseLoader
+                            css={'display: block; margin: auto auto; border-color: red;'}
+                            size={9} color={!props.primary ? siteColors.white : siteColors.black}
+                        />
+                        :
+                        children
+                    }
+                </Styling>
+            }
+        </>
+    
     );
 };
 
@@ -49,7 +68,7 @@ ${ButtonType};
 
 Button.propTypes = {
     to: PropTypes.string,
-    children: PropTypes.string.isRequired,
+    children: PropTypes.any.isRequired,
     primary: PropTypes.any,
     secondary: PropTypes.any,
     isLoading: PropTypes.bool,
