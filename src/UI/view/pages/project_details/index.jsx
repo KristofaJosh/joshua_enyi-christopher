@@ -1,14 +1,13 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import StyleContext from "../../../context";
 
 const ProjectDetails = props => {
     const history = useHistory();
-    const {store:{inView}} = useContext(StyleContext);
+    const {store: {inView}} = useContext(StyleContext);
     
-    console.log(inView);
     
-    if (inView.length < 1){
+    if (inView.length < 1) {
         history.push('/not_found');
     }
     

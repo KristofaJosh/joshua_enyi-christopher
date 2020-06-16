@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
 import {siteColors} from "../../../constants/siteColors";
@@ -6,10 +6,9 @@ import {BsInfoCircle, FiGithub, MdWeb} from "react-icons/all";
 import {useHistory} from 'react-router-dom';
 import StyleContext from "../../../context";
 
-const WorksCard = ({name, id, image, url, repo_url, tools, about}) => {
+const WorksCard = ({name, id, image, url, repo_url, tools}) => {
     
     const {dispatch} = useContext(StyleContext);
-    
     
     
     const history = useHistory();
@@ -17,6 +16,7 @@ const WorksCard = ({name, id, image, url, repo_url, tools, about}) => {
     const goto = (id) => {
         history.push('/about_project', {id: id});
     };
+    
     
     
     return (

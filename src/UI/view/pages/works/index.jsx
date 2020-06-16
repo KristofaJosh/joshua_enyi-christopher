@@ -17,36 +17,14 @@ const WorksPage = () => {
             url: 'https://chrisjoshportfolio.herokuapp.com/jobs/',
             
         }).then((resp) => {
-            dispatch({type: 'setWorks', data: resp.data})
+            dispatch({type: 'setWorks', data: resp.data});
         }).catch((err) => logErrorToMyService(err))
+        // eslint-disable-next-line
     }, []);
     
     
     return (
         <ContentTemplate>
-            <div>
-                <Text heading noBold capitalize>recent works</Text>
-                <WorksTemplate>
-                    {
-                        worksData.length < 1 ?
-                            <Placeholder spread={4}/>
-                            :
-                            worksData.map((el, index) => (
-                                <WorksCard
-                                    key={index}
-                                    id={index}
-                                    name={el.name}
-                                    image={el.project_snapshot}
-                                    url={el.link}
-                                    repo_url={el.repository}
-                                    tools={el.tools}
-                                    about={el.description}
-                                />
-                            ))
-                    }
-                </WorksTemplate>
-            </div>
-            
             <div>
                 <Text capitalize noBold heading>all works</Text>
                 <WorksTemplate>
@@ -69,7 +47,6 @@ const WorksPage = () => {
                     }
                 </WorksTemplate>
             </div>
-        
         </ContentTemplate>
     );
 };
