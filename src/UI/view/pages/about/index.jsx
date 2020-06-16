@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import ContentTemplate from "../../template/content.template";
 import Button from "../../../component/atoms/button";
 import styled from "styled-components";
@@ -7,11 +7,17 @@ import {siteColors} from "../../../constants/siteColors";
 const AboutPage = () => {
     
     const [loading, setLoading] = useState(false);
+    const [resume, setResumeLink] = useState('#');
+    
+    const clickATag = useRef();
     
     const downloadResume = () => {
         setLoading(true);
+        // api call here
+        setResumeLink("/assets/resume/chrisjosh.pdf");
         
         setTimeout(() => {
+            clickATag.current.click();
             setLoading(false);
         }, 2000)
     };
@@ -34,15 +40,17 @@ const AboutPage = () => {
                 
                 <div className="about-me">
                     <p>
-                        Hi there, my name is Joshua Enyi-Christopher, I am a fullstack developer (Python/React Stack).
-                        I have an utmost passion for solving problems. I am very much interested in taking complex
-                        problems and simplifying it maybe automate it too.
-                        I graduated from Babcock University with a degree in Bachelors of science in Computer
-                        Information Systems
+                        Hi there, my name is Joshua Enyi-Christopher, I am a Well-organised person, problem solver with
+                        high attention to detail. I have extensive programming experience and comfortable with both frontend
+                        and backend, picking up another language is not a problem for me, although I primarily use React and
+                        Python for most jobs.
                     </p>
                     
                     
                     <div className={'buttons'} style={{margin: '1rem 0'}}>
+                        <span style={{display: 'none'}}>
+                            <a href={resume} ref={clickATag} target="_blank" rel="noopener noreferrer" download/>
+                        </span>
                         <Button onClick={downloadResume} isLoading={loading} primary>get my resume</Button>
                         <Button to={'/works'} secondary>view my works</Button>
                     </div>

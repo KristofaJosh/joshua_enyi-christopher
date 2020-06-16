@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import styled from "styled-components";
 import StyleContext from "../../../context";
-import {AiOutlineLinkedin, AiOutlineSkype, FiGithub} from "react-icons/all";
+import {AiOutlineLinkedin, AiOutlineSkype, FiGithub, FaStackOverflow} from "react-icons/all";
 
 const Socials = ({...props}) => {
     const {siteColors, navState} = useContext(StyleContext);
@@ -10,6 +10,7 @@ const Socials = ({...props}) => {
         {icon: <FiGithub/>, to: 'https://github.com/KristofaJosh'},
         {icon: <AiOutlineLinkedin/>, to: 'https://www.linkedin.com/in/christofajosh/'},
         {icon: <AiOutlineSkype/>, to: 'skype:christofajosh?chat'},
+        {icon: <FaStackOverflow/>, to: 'https://stackoverflow.com/users/8149165/joshua-enyi-christopher'},
     ];
     
     return (
@@ -35,7 +36,7 @@ flex-direction:  ${props=>props.isOpen ? 'column' : 'row'};
 justify-content: space-between;
 font-size: 1.2rem;
 cursor: pointer;
-z-index: ${props=>props.isOpen ? '3' : '2'};
+z-index: ${props=>props.isOpen ? '9' : '2'};
 color: ${props=>props.isOpen ? props.white : props.black };
 
 max-width: 200px;

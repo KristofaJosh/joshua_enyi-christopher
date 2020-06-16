@@ -56,7 +56,7 @@ display: grid;
 grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
 
 position: fixed;
-z-index: 3;
+z-index: 9;
 height: 100vh;
 width: 100%;
 

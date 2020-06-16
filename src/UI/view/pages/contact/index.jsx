@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ContentTemplate from "../../template/content.template";
 import styled from "styled-components";
 import {AiOutlineInstagram, AiOutlineSkype, BsPhone, FaTelegram, RiMailSendLine} from "react-icons/all";
 import {siteColors} from "../../../constants/siteColors";
 import Button from "../../../component/atoms/button";
+import {FcCheckmark} from "react-icons/fc";
 
 const ContactPage = () => {
+    const [sendMessage, setSendMessage] = useState({loading: false, button: 'send message', icon: ''});
     
     const contacts = [
         {
@@ -19,12 +21,30 @@ const ContactPage = () => {
         {icon: <AiOutlineSkype/>, detail: '@Christofajosh', link: 'skype:christofajosh?chat'},
     ];
     
+    const sendMail = () => {
+        setSendMessage({...sendMessage, loading: true});
+        setTimeout(() => {
+            setSendMessage({...sendMessage, loading: false});
+            
+            if (!sendMessage.loading) {
+                setSendMessage({...sendMessage, button: 'sent ', icon: <FcCheckmark/>});
+                setTimeout(() => {
+                    setSendMessage({...sendMessage, button: 'send message'})
+                }, 1000)
+            }
+            
+        }, 3000);
+        
+        
+    };
+    
     return (
         <ContentTemplate>
             <Styling>
                 <div className="description">
                     <p>Get in touch!</p>
-                    <p>Do you have something you want to talk about or bring to life ? <br/> send me a message</p>
+                    <p>I am interested in freelance opportunities – especially ambitious or large projects. However, if
+                        you have something you want to talk about or bring to life, please do send me a message</p>
                 </div>
                 <div className="message">
                     <div className="contact-info">
@@ -40,12 +60,13 @@ const ContactPage = () => {
                             ))
                         }
                     </div>
-                        <div className="message-box">
-                            <input type="text" placeholder={'name'}/>
-                            <input type="text" placeholder={'email'}/>
-                            <textarea placeholder={'message'}/>
-                            <Button secondary>send message</Button>
-                        </div>
+                    <div className="message-box">
+                        <input type="text" placeholder={'name'}/>
+                        <input type="text" placeholder={'email'}/>
+                        <textarea placeholder={'message'}/>
+                        <Button isLoading={sendMessage.loading} onClick={sendMail}
+                                secondary>{sendMessage.button}{sendMessage.icon}</Button>
+                    </div>
                 </div>
             </Styling>
         </ContentTemplate>

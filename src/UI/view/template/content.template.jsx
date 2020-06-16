@@ -32,7 +32,8 @@ const ContentTemplate = ({children}) => {
 
 const Styling = styled.div`
 width: 100%;
-min-height: 100%;
+min-height: 100vh;
+height: 100%;
 
 background: ${props=>props.white};
 
@@ -43,7 +44,7 @@ align-items: center;
 
 .content {
     margin: 4.3em 2.5em;
-    max-width: 60%;
+    max-width: 70%;
     width: 100%;
     max-height: 80%;
 }

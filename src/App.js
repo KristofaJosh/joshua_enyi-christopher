@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PageNotFound from "./UI/view/pages/error/404";
 import {ClimbingBoxLoader} from "react-spinners";
 import NavBar from "./UI/component/organisms/navbar";
+import {siteColors} from "./UI/constants/siteColors";
 
 
 const HomePage = lazy(() => import('./UI/view/pages/home'));
@@ -22,7 +23,7 @@ function App() {
                 <Suspense
                     fallback={
                         <div
-                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: siteColors.white}}>
                             <ClimbingBoxLoader/>
                         </div>
                     }>
