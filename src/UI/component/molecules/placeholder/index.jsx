@@ -28,9 +28,6 @@ const Styling = styled.div`
 position: relative;
 width: 100%;
 background: ${siteColors.white};
-// display: flex;
-// align-items: center;
-// justify-content: center;
 border: 0.5px solid #2013130a;
 height: 200px;
 padding: 1rem;
@@ -49,7 +46,7 @@ div {
   0%   {background: grey;}
   50%  {background: white;}
   75% {background: #938f8f;}
-  100%   {background: grey;}
+  100%   {background: white;}
 }
 
 `;

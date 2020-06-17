@@ -56,6 +56,14 @@ const ProjectDetails = props => {
                 <Text semi bold capitalize>Resources</Text>
                 <div className={'separator'}/>
                 <ul>
+                    {/*{*/}
+                    {/*    inView.resources.length > 0 && inView.resources.map((el, index)=>(*/}
+                    {/*        <li key={index}>*/}
+                    {/*            <Text>{el.describe}: <a style={{textTransform:'underline' }} href={el.url}>{inView.url}</a></Text>*/}
+                    {/*        </li>*/}
+                    {/*    ))*/}
+                    {/*}*/}
+                    
                     <li>
                         <Text>visit website at: <a href={inView.link}>{inView.link}</a></Text>
                     </li>
