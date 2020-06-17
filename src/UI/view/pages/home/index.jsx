@@ -4,6 +4,12 @@ import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
 import Socials from "../../../component/molecules/socials";
 import Footer from "../../../component/organisms/footer";
+import RecentWorks from "../../../component/organisms/recentworks";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import Text from "../../../component/atoms/typography";
+
+AOS.init();
 
 const HomePage = () => {
     
@@ -16,8 +22,8 @@ const HomePage = () => {
                             
                             <section>
                                 <Socials/>
-                                <div className={'name-and-title'}>
-                                    <p>JOSHUA CHRISTOPHER</p>
+                                <div data-aos={"flip-right"} className={'name-and-title'}>
+                                    <p >JOSHUA CHRISTOPHER</p>
                                     <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
                                 </div>
                                 
@@ -28,10 +34,15 @@ const HomePage = () => {
                             </section>
                             
                             <section>
-                                section 2
+                                <div data-aos="zoom-in-up" className={'words'}>
+                                    <Text bold heading>Keen attention to details</Text>
+                                    <Text bold heading>Carefully crafted<span className={'line'}/></Text>
+                                    <Text bold small uppercase>Below are my most recent work</Text>
+                                </div>
                             </section>
+                            
                             <section>
-                                recent jobs
+                                <RecentWorks/>
                             </section>
                         </Landing>
                         {
@@ -75,7 +86,19 @@ section:nth-child(1){
 
 section:nth-child(2) {
     padding: 1rem;
-    height: 100vh;
+    
+    .words {
+        margin: 3rem 0;
+        
+        p .line {
+            display: inline-block;
+            margin-left: 20px;
+            background: ${props => props.black};
+            width: 70px;
+            height: 4px;
+        }
+    }
+    
 }
 
 .scroll {
