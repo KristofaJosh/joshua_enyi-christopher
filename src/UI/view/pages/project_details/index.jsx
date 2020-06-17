@@ -8,7 +8,7 @@ const ProjectDetails = props => {
     const history = useHistory();
     const {store: {inView}} = useContext(StyleContext);
     
-    console.log(inView)
+    console.log(inView);
     
     
     if (inView.length < 1) {
@@ -27,12 +27,13 @@ const ProjectDetails = props => {
             </div>
             <div className={'separator'}/>
             <div className={'project-image'}>
-                <iframe src={inView.link} frameBorder="0" style={{    width: '100%', height: '500px', border: '1px solid'}}/>
+                <iframe title={inView.name} src={inView.link} frameBorder="0"
+                        style={{width: '100%', height: '500px', border: '1px solid'}}/>
             </div>
             <div className="description">
                 <Text bold semi capitalize margin={'1rem 0 0 0'}>About this project</Text>
                 <div className={'separator'}/>
-    
+                
                 <Text margin={'0.5rem 0'}>
                     {/*{inView.description}*/}
                     Project developed as a contractor with the SKY GO (UK) Desktop team. The Sky Go Desktop app is a
@@ -48,7 +49,8 @@ const ProjectDetails = props => {
                 <div className={'separator'}/>
                 <Text bold>Code technologies I got involved with while working on this project.</Text>
                 <div style={{margin: '1rem 0'}}>
-                    <ul>{!!Object.entries(inView).length && inView.tools.split(' ').map((el, i) => (<li key={i}>{el}</li>))}</ul>
+                    <ul>{!!Object.entries(inView).length && inView.tools.split(' ').map((el, i) => (
+                        <li key={i}>{el}</li>))}</ul>
                 </div>
             </div>
             
@@ -82,7 +84,6 @@ const ProjectDetails = props => {
 };
 
 ProjectDetails.propTypes = {};
-
 
 
 export default ProjectDetails;
