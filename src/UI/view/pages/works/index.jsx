@@ -26,7 +26,9 @@ const WorksPage = () => {
     return (
         <ContentTemplate>
             <div>
-                <Text capitalize noBold heading>all works</Text>
+                <Text capitalize noBold heading margin={'1.5rem 0'}>
+                    all works
+                </Text>
                 <WorksTemplate>
                     {
                         worksData.length < 1 ?
