@@ -221,7 +221,7 @@ const PostProject = () => {
                     <Group name={'project state'}>
                         <div className={'snapshot'}>
                             <section style={{width: '100%'}}>
-                                <Input name={'web_url'} placeholder={'Website'} ref={corName}
+                                <Input name={'web_url'} placeholder={'Website'}
                                        value={project.website.web_url} onChange={addProject}/>
                                 <Select name={'domain'} options={domainList} onChange={addProject}
                                         active={project.repository.domain}/>

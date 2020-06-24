@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import styled from "styled-components";
 import img from './centerimage.png';
@@ -19,6 +19,10 @@ const HomePage = () => {
     const goto = (id) => {
         history.push('/about_project', {id: id});
     };
+    
+    useEffect(()=>{
+    
+    },[]);
     
     return (
         <StyleConsumer>

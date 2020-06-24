@@ -24,7 +24,7 @@ const Button = ({to, children, isLoading, onClick, ...props}) => {
                     </Styling>
                 </Link>
                 :
-                <Styling {...props} onClick={onClick}>
+                <Styling {...props} onClick={onClick} >
                     {isLoading ?
                         <PulseLoader
                             css={'display: block; margin: auto auto; border-color: red;'}

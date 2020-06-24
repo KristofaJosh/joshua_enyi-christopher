@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {siteColors} from "../../../constants/siteColors";
 import Text from "../typography";
 
 
-const Input = (props, ref) => {
+const Input = ({capitalize, ...props}, ref) => {
     return (
-        <Styling  {...props}>
+        <Styling  capitalize={capitalize}>
             <input {...props} ref={ref}/>
         </Styling>
     );
@@ -16,7 +16,7 @@ const Input = (props, ref) => {
 export const TextArea = (props) => {
     return (
         <StylingTextArea>
-            <textarea {...props}/>
+            <textarea {...props} />
         </StylingTextArea>
     );
 };
@@ -57,10 +57,15 @@ Select.propTypes = {};
 const Styling = styled.div`
 display: block;
 margin: 0.75rem 0;
+
+
 input, textarea, select, fieldset {
     border: 2px solid ${siteColors.black};
     padding: 1rem;
-    width: 100%
+    width: 100%;
+    ${props=>props.capitalize && css`
+        text-transform: capitalize;
+    `}
 }
 
 input {
@@ -70,6 +75,7 @@ input {
 
 const StylingTextArea = styled(Styling)`
 textarea {
+    font-family: Inter;
     text-indent: 10px;
     resize: vertical;
     min-height: 200px;

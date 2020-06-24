@@ -1,13 +1,29 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ContentTemplate from "../../template/content.template";
 import styled from "styled-components";
 import {AiOutlineInstagram, AiOutlineSkype, BsPhone, FaTelegram, RiMailSendLine} from "react-icons/all";
 import {siteColors} from "../../../constants/siteColors";
 import Button from "../../../component/atoms/button";
-import {FcCheckmark} from "react-icons/fc";
+import {FcCancel, FcCheckmark} from "react-icons/fc";
+import Input, {TextArea} from "../../../component/atoms/input";
+import StyleContext from "../../../context";
+import axios from 'axios';
+import {logErrorToMyService} from "../../../../helpers/errorReport";
+import Text from "../../../component/atoms/typography";
+import validateEmail from "../../../../helpers/validateEmail";
 
 const ContactPage = () => {
+    const {dispatch, store: {contact}} = useContext(StyleContext);
     const [sendMessage, setSendMessage] = useState({loading: false, button: 'send message', icon: ''});
+    const [mail, setMail] = useState(
+        {
+            name: (contact && contact.name) || '',
+            email: (contact && contact.email) || '',
+            message: (contact && contact.message) || '',
+            file: (contact && contact.file) || ''
+        }
+    );
+    const [err, setErr] = useState({m: '', state: false});
     
     const contacts = [
         {
@@ -21,22 +37,69 @@ const ContactPage = () => {
         {icon: <AiOutlineSkype/>, detail: '@Christofajosh', link: 'skype:christofajosh?chat'},
     ];
     
+    
+    const writeMail = (e) => {
+        setMail({...mail, [e.target.name]: e.target.value});
+    };
+    
+    // component will mount
+    useEffect(() => {
+        dispatch({type: 'setContact', data: mail})
+    }, [mail, dispatch]);
+    
+    
     const sendMail = () => {
         setSendMessage({...sendMessage, loading: true});
-        setTimeout(() => {
-            setSendMessage({...sendMessage, loading: false});
-            
-            if (!sendMessage.loading) {
-                setSendMessage({...sendMessage, button: 'sent ', icon: <FcCheckmark/>});
-                setTimeout(() => {
-                    setSendMessage({...sendMessage, button: 'send message'})
-                }, 1000)
+        
+        const {name, email, message} = mail;
+        
+        if (name && email && message) {
+            if (message.length < 10) {
+                setErr({...err, m: 'words too few :-)', state: true});
+                setSendMessage({...sendMessage, loading: false});
+                return
+            }
+            if(!validateEmail(email)){
+                setErr({...err, m: 'check your email', state: true});
+                setSendMessage({...sendMessage, loading: false});
+                return
             }
             
-        }, 3000);
-        
+            axios({
+                url: 'http://localhost:3500/send_mail',
+                method: 'POST',
+                data: mail,
+            }).then((res) => {
+                setSendMessage({...sendMessage, loading: false});
+                
+                if (res.data.state === 'sent') {
+                    setSendMessage({...sendMessage, button: 'sent ', icon: <FcCheckmark/>});
+                } else if (res.data.state === 'fail') {
+                    setSendMessage({...sendMessage, button: 'failed ', icon: <FcCancel/>});
+                }
+                
+                setTimeout(() => {
+                    setSendMessage({...sendMessage, button: 'send message'})
+                }, 2000)
+                
+            }).catch((err) => {
+                logErrorToMyService(err);
+                setSendMessage({...sendMessage, loading: false});
+            });
+            
+        } else {
+            setSendMessage({...sendMessage, loading: false});
+            setErr({...err, m: 'you must fill all fields', state: true})
+        }
         
     };
+    
+    useEffect(() => {
+        if (err.state) {
+            setTimeout(() =>
+                setErr({...err, m: '', state: false}), 2000)
+        }
+    }, [err]);
     
     return (
         <ContentTemplate>
@@ -61,10 +124,11 @@ const ContactPage = () => {
                         }
                     </div>
                     <div className="message-box">
-                        <input type="text" placeholder={'name'}/>
-                        <input type="text" placeholder={'email'}/>
-                        <textarea placeholder={'message'}/>
-                        <Button isLoading={sendMessage.loading} onClick={sendMail}
+                        {err.state ? <span style={{color: 'red'}}><Text small>{err.m}</Text></span> : null}
+                        <Input capitalize placeholder={'Name'} name={'name'} value={mail.name} onChange={writeMail}/>
+                        <Input placeholder={'Email'} name={'email'} value={mail.email} onChange={writeMail}/>
+                        <TextArea placeholder={'Message'} name={'message'} value={mail.message} onChange={writeMail}/>
+                        <Button isLoading={sendMessage.loading} disabled={sendMessage.loading} onClick={sendMail}
                                 secondary>{sendMessage.button}{sendMessage.icon}</Button>
                     </div>
                 </div>
@@ -103,23 +167,23 @@ grid-template-areas:
     
     .message-box {
         
-        input, textarea {
-            display: block;
-            width: 100%;
-            border: 2px solid ${siteColors.black};
-            margin: 0.75rem 0;
-            padding: 1rem;
-            text-indent: 10px;
-        }
+        // input, textarea {
+        //     display: block;
+        //     width: 100%;
+        //     border: 2px solid ${siteColors.black};
+        //     margin: 0.75rem 0;
+        //     padding: 1rem;
+        //     text-indent: 10px;
+        // }
         
-        input:nth-child(1){
-            text-transform: capitalize;
-        }
+        // input:nth-child(1){
+        //     text-transform: capitalize;
+        // }
         
-        textarea {
-            resize: vertical;
-            height: 200px;
-        }
+        // textarea {
+        //     resize: vertical;
+        //     height: 200px;
+        // }
         
     }
     

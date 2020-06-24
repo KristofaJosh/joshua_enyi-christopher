@@ -26,6 +26,8 @@ const ConstantProvider = ({children}) => {
                 return {...state, isOpen: !state.isOpen};
             case 'setForm':
                 return {...state, form: action.data};
+            case 'setContact':
+                return {...state, contact: action.data};
             case 'setToken':
                 return {...state, token: action.data.token, isAuthenticated: action.data.state};
             case 'clearToken':
