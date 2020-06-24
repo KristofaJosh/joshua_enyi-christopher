@@ -59,7 +59,7 @@ const ContactPage = () => {
                 setSendMessage({...sendMessage, loading: false});
                 return
             }
-            if(!validateEmail(email)){
+            if (!validateEmail(email)) {
                 setErr({...err, m: 'check your email', state: true});
                 setSendMessage({...sendMessage, loading: false});
                 return
@@ -84,7 +84,8 @@ const ContactPage = () => {
                 
             }).catch((err) => {
                 logErrorToMyService(err);
-                setSendMessage({...sendMessage, loading: false});
+                setSendMessage({...sendMessage, button: 'failed ', icon: <FcCancel/>, loading: false});
+                setErr({...err, m: '', state: true});
             });
             
         } else {
@@ -96,10 +97,12 @@ const ContactPage = () => {
     
     useEffect(() => {
         if (err.state) {
-            setTimeout(() =>
-                setErr({...err, m: '', state: false}), 2000)
+            setTimeout(() => {
+                setSendMessage({loading: false, button: 'send message', icon: ''});
+                setErr({...err, m: '', state: false})
+            }, 2000)
         }
-    }, [err]);
+    }, [err, sendMessage]);
     
     return (
         <ContentTemplate>
