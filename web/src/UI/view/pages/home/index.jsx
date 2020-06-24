@@ -86,6 +86,8 @@ background: ${props => props.white};
 
 section:nth-child(1){
     position: relative;
+    display: flex;
+    align-items: center;
     padding: 1.5rem;
     height: 100vh;
     background: url(${img});
@@ -107,6 +109,9 @@ section:nth-child(1){
 
 section:nth-child(2) {
     padding: 1rem;
+    height: 75vh;
+    display: flex;
+    align-items: center;
     
     .words {
         margin: 3rem 0;
@@ -168,10 +173,16 @@ section:nth-child(2) {
     }
 }
 
-@media screen and (min-width: 1065px ){
+@media screen and (max-width: 1065px){
     section:nth-child(1){
-        background-position: center center;
+        background-position: calc(203px + 50%) center;
+
+        
+        .name-and-title {
+            top: -54px;
+        }
     }
+   
 }
 
 
@@ -183,7 +194,6 @@ section:nth-child(2) {
             width: 57px;
         }
     }
-    section:nth-child(1){height: 75vh;}
 };
 
 @media screen and (max-width: 580px){
@@ -197,132 +207,17 @@ section:nth-child(2) {
 
 @media screen and (max-height: 400px){
     section:nth-child(1){
+        background-position: calc(203px + 50%) 19px;
+
         .name-and-title {
-            top: 125px;
+            top: 5px;
             left: 1.5rem;
         }
     }
 };
 
 
-
-
-
-
-
-
-
-
-
-
 `;
-
-//
-// @media screen and (min-width: 1218px){
-//     .name-and-title {
-//         > p {
-//             position: relative;
-//             left: 150px;
-//             :nth-child(1){ font-size: 45px};
-//             :nth-child(2){ font-size: 20px};
-//         }
-//     }
-//
-//     .socials {
-//         flex-direction: column;
-//         height: 40%;
-//     }
-//
-// }
-
-//
-// @media screen and (min-width: 1920px){
-//     .name-and-title {
-//         > p {
-//             position: relative;
-//             left: 265px;
-//             :nth-child(1){ font-size: 38px};
-//             :nth-child(2){ font-size: 20px};
-//         }
-//     }
-//
-// }
-//
-// @media screen and (min-width: 2560px){
-//     .name-and-title {
-//         > p {
-//             position: relative;
-//             left: 500px;
-//             :nth-child(1){ font-size: 50px};
-//             :nth-child(2){ font-size: 20px};
-//         }
-//     }
-//
-// }
-//
-//
-//
-// @media screen and (max-width: 1797px) {
-//     .name-and-title {
-//         > p {
-//             position: relative;
-//             left: 0px;
-//             bottom: 88px;
-//             :nth-child(1){ font-size: 28px};
-//             :nth-child(2){ font-size: 1rem};
-//         }
-//     }
-//
-//     .socials {
-//         bottom: 0;
-//         max-width: 320px;
-//         width: 100%;
-//     }
-// }
-//
-//
-// @media screen and (max-width: 1014px) {
-//
-//     section:nth-child(2){
-//         background-position: 300px center;
-//     }
-//
-//     .name-and-title {
-//         > p {
-//             :nth-child(1){
-//                 font-size: 25px;
-//             }
-//         }
-//     }
-//
-// }
-//
-// @media screen and (max-width: 900px){
-//     .background-image {
-//         background: blue;
-//         img {
-//             width: 80%;
-//         }
-//     }
-//
-//     section:nth-child(2){
-//         background-position: 250px center;
-//     }
-//
-//
-// }
-//
-// @media screen and (max-width: 804px){
-//     .scroll {
-//         left: -76px;
-//         bottom: 87px;
-//         ::after {
-//             width: 57px;
-//         }
-//     }
-// }
-//
-// `;
 
 
 export default HomePage;
