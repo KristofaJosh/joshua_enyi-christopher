@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import StyleContext from "../../../context";
 import Button from "../../../component/atoms/button";
@@ -36,7 +36,6 @@ const PostProject = () => {
         //eslint-disable-next-line
     }, [project]);
     
-    const corName = useRef();
     
     const post_project = (event) => {
         event.preventDefault();
@@ -203,13 +202,14 @@ const PostProject = () => {
                 
                 <form onSubmit={post_project}>
                     <Group name={'project details'}>
-                        <Input placeholder={project.name || 'Project Name'} name={'name'}  onChange={addProject}/>
+                        <Input placeholder={project.name || 'Project Name'} name={'name'} onChange={addProject}/>
                         <Input placeholder={project.tools || 'Docker, React, Typescript ...'} name={'tools'}
                                onChange={addProject}/>
                         <span style={{width: '100%', display: 'flex'}}>
                             {
                                 toolResolver(project.tools)
-                                    .map(el => (<i style={{marginRight:'10px'}} className={'tools devicon-' + el + '-plain colored'}/>))
+                                    .map(el => (<i style={{marginRight: '10px'}}
+                                                   className={'tools devicon-' + el + '-plain colored'}/>))
                             }
                         </span>
                         <Input placeholder={'Short Description'} name={'short'} value={project.description.short}
@@ -228,7 +228,8 @@ const PostProject = () => {
                                 <Input name={'repo_url'} placeholder={'Repository Url'}
                                        value={project.repository.repo_url} onChange={addProject}/>
                                 <section>
-                                    <Input placeholder={project.category || 'category'} name={'category'} onChange={addProject}/>
+                                    <Input placeholder={project.category || 'category'} name={'category'}
+                                           onChange={addProject}/>
                                     <Select name={'completed'} onChange={addProject}
                                             options={
                                                 [
