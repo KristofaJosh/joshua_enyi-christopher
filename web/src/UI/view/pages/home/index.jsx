@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
 import styled from "styled-components";
 import img from './centerimage.png';
 import {StyleConsumer} from "../../../context";
@@ -13,10 +14,16 @@ AOS.init();
 
 const HomePage = () => {
     
+    const history = useHistory();
+    
+    const goto = (id) => {
+        history.push('/about_project', {id: id});
+    };
+    
     return (
         <StyleConsumer>
             {
-                ({siteColors}) => (
+                ({siteColors, dispatch, store:{worksData}}) => (
                     <>
                         <Landing {...siteColors}>
                             
@@ -42,7 +49,21 @@ const HomePage = () => {
                             </section>
                             
                             <section>
-                                <RecentWorks/>
+                                {
+                                    worksData && worksData.slice(0, 5).map((el, index)=>(
+                                        <RecentWorks
+                                            key={index} id={index+1}
+                                            brief={el.name}
+                                            tag={'frontend/backend'}
+                                            onClick={
+                                                () => {
+                                                    dispatch({type: 'getWork', id: index});
+                                                    goto(index);
+                                                }
+                                            }
+                                        />
+                                    ))
+                                }
                             </section>
                         </Landing>
                         {
@@ -110,7 +131,7 @@ section:nth-child(2) {
     justify-content: center;
     align-items: center;
     width: max-content;
-    animation: scroll 1.5s;
+    animation: scroll 0.8s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
     
@@ -162,6 +183,7 @@ section:nth-child(2) {
             width: 57px;
         }
     }
+    section:nth-child(1){height: 75vh;}
 };
 
 @media screen and (max-width: 580px){
