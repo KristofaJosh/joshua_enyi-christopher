@@ -1,35 +1,41 @@
 import React, {useContext, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from "react-router-dom"
 import Button from "../../../component/atoms/button";
 import ContentTemplate from "../../template/content.template";
-import axios from "axios";
-import {logErrorToMyService} from "../../../../helpers/errorReport";
 import StyleContext from "../../../context";
+import {useQuery} from "@apollo/react-hooks";
+import {logErrorToMyService} from "../../../../helpers/errorReport";
+import Input from "../../../component/atoms/input";
+
 
 const Login = () => {
     const [inputs, setInputs] = useState({username: '', password: ''});
-    const [isLoading, setIsLoading] = useState(false);
+    const [logging, setLogging] = useState({loading: false, message: ''});
+    const {dispatch, Queries: {login}} = useContext(StyleContext);
     
-    const {dispatch} = useContext(StyleContext);
+    const {loading, error, data} = useQuery(login, {
+        variables: {
+            username: inputs.username,
+            password: inputs.password
+        }
+    });
+    
     
     const location = useLocation();
     
     const authenticate = (event) => {
         event.preventDefault();
+        setLogging({...logging, loading: true});
         
-        axios({
-            url: 'http://localhost:4000/authenticate_me',
-            method: 'POST',
-            data: inputs,
-        }).then((response) => {
-            setIsLoading(false);
-            // save token
-            dispatch({type: 'setToken', data: response.data});
-        }).catch((err) => {
-                setIsLoading(false);
-                logErrorToMyService(err)
-            }
-        );
+        if (!loading) setLogging({...logging, loading: false});
+        
+        if (data.login.state && data.login.token) {
+            dispatch({type: 'setToken', data: data.login})
+        } else {
+            setLogging({...logging, loading: false, message: data.login.message})
+        }
+        
+        if (error) logErrorToMyService(error);
     };
     
     return (
@@ -37,13 +43,14 @@ const Login = () => {
             <ContentTemplate>
                 <span>
                     {location.state && true ? location.state.message : null}
+                    {logging.message && true ? logging.message : null}
                 </span>
                 <form onSubmit={authenticate}>
-                    <input type="text" name={"username"}
+                    <Input name={"username"} placeholder={'Username'}
                            onChange={event => setInputs({...inputs, username: event.target.value})}/>
-                    <input type="password" name={"password"}
+                    <Input type="password" name={"password"} placeholder={'Password'}
                            onChange={event => setInputs({...inputs, password: event.target.value})}/>
-                    <Button secondary isLoading={isLoading}>Login</Button>
+                    <Button secondary isLoading={logging.loading}>Login</Button>
                 </form>
             </ContentTemplate>
         </>

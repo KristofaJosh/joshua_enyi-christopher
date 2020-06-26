@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import StyleContext from "../../../context";
 import Button from "../../../component/atoms/button";
-import {logErrorToMyService} from "../../../../helpers/errorReport";
-import axios from "axios";
 import ContentTemplate from "../../template/content.template";
 import Input, {Group, Select, TextArea} from "../../../component/atoms/input";
 import {siteColors} from "../../../constants/siteColors";
@@ -12,9 +10,13 @@ import styled from "styled-components";
 import Placeholder from "../../../component/molecules/placeholder";
 import WebsiteUrlToImage from "../../../../helpers/generateWebsiteImage";
 import {toolResolver} from "../../../../helpers/tools";
+import {useMutation} from '@apollo/react-hooks';
+import {logErrorToMyService} from "../../../../helpers/errorReport";
+
 
 const PostProject = () => {
-    const {dispatch, store: {token, form}} = useContext(StyleContext);
+    const {dispatch, store: {form}, Mutations: {addProjectMutation}} = useContext(StyleContext);
+    const [addProject] = useMutation(addProjectMutation);
     const [isLoading, setIsLoading] = useState(false);
     const [mAlert, setAlert] = useState({state: false, message: 'upload failed'});
     const history = useHistory();
@@ -36,78 +38,92 @@ const PostProject = () => {
         //eslint-disable-next-line
     }, [project]);
     
-    
-    const post_project = (event) => {
-        event.preventDefault();
+    const post_project = (e) => {
+        e.preventDefault();
         
-        const {name, description: {short, long}, website: {web_url, snapshot}, resources} = project;
+        const {
+            name, description: {short, long}, tools, website: {web_url, snapshot}, repository: {domain, repo_url},
+            resources, category, completed
+        } = project;
         
+        // if (!name || !short || !long || !web_url || !snapshot) {
+        //     alert('Name, Description or Website snapshot is not loaded, may be missing an input');
+        //     return
+        // }
         
         if (resources.length > 0) {
             let {describe, link, tag} = resources[resources.length - 1];
             if (!describe && !link && !tag) {
-                project.resources.pop();
+                // remove last empty input field
+                resources.pop();
             }
         }
         
-        if (!name || !short || !long || !web_url || !snapshot) {
-            alert('Name, Description or Website snapshot is not loaded may be missing an input');
-            return
-        }
         
-        setProject({...project, tools: toolResolver(project.tools)}); // change to list
-        
-        
-        axios({
-            url: 'http://localhost:4000/add_project',
-            method: 'POST',
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            data: project
+        try {
+            setIsLoading(true);
             
-        }).then((response) => {
-            setIsLoading(false);
-            
-            if (!response.data.state) {
+            addProject({
+                variables: {
+                    name: name,
+                    description: {short: short, long: long},
+                    tools: toolResolver(tools),
+                    website: {url: web_url, snapshot: snapshot},
+                    repository: {domain: domain, url: repo_url},
+                    resources: resources,
+                    category: category,
+                    completed: Boolean(completed),
+                    token: "Bearer " + JSON.parse(localStorage.getItem('initialState')).token || ''
+                },
+            }).then(()=>{
+                setIsLoading(false);
+                setAlert({state: true, message: 'Project has been successfully added'});
+    
+                // clear set mAlert
+                if(mAlert){
+                    setTimeout(() => {
+                        setAlert({state: false, message: ''});
+    
+                        // if (data) {
+                        //     setProject({
+                        //         name: '',
+                        //         description: {short: '', long: ''},
+                        //         tools: '',
+                        //         website: {web_url: '', snapshot: ''},
+                        //         repository: {domain: '', repo_url: ''},
+                        //         resources: [{describe: '', link: '', tag: ''}],
+                        //         category: '',
+                        //         completed: false
+                        //     });
+                        // }
+                        
+                    }, 2000);
+                }
+            }).catch((err)=>{
+                logErrorToMyService(err);
                 dispatch({type: 'clearToken'});
+    
                 setTimeout(() => {
                     history.push('/auth', {message: 'session expired, Login again'});
                 }, 300);
-                return
-            }
-            setAlert({state: true, message: response.data.message});
+            })
             
-            setProject({
-                name: '',
-                description: {short: '', long: ''},
-                tools: '',
-                website: {web_url: '', snapshot: ''},
-                repository: {domain: '', repo_url: ''},
-                resources: [{describe: '', link: '', tag: ''}],
-                category: '',
-                completed: false
-            });
-            
-            // clear set mAlert
-            setTimeout(() => {
-                setAlert({state: false, message: ''});
-            }, 2000);
-            
-        }).catch((err) => {
-                setIsLoading(false);
-                setAlert({state: false, message: err.message});
-                logErrorToMyService(err)
-            }
-        );
+        } catch (error) {
+            console.log('something went wrong...')
+        }
     };
+    
+
+    
+    
+
     
     const logOut = () => {
         dispatch({type: 'clearToken'});
-        history.push('/')
+        history.push('/auth')
     };
     
-    const addProject = (event) => {
+    const addProjectField = (event) => {
         const eName = event.target.name;
         if (['short', 'long'].includes(eName)) {
             setProject({...project, description: {...project.description, [eName]: event.target.value}})
@@ -202,9 +218,9 @@ const PostProject = () => {
                 
                 <form onSubmit={post_project}>
                     <Group name={'project details'}>
-                        <Input placeholder={project.name || 'Project Name'} name={'name'} onChange={addProject}/>
+                        <Input placeholder={project.name || 'Project Name'} name={'name'} onChange={addProjectField}/>
                         <Input placeholder={project.tools || 'Docker, React, Typescript ...'} name={'tools'}
-                               onChange={addProject}/>
+                               onChange={addProjectField}/>
                         <span style={{width: '100%', display: 'flex'}}>
                             {
                                 toolResolver(project.tools)
@@ -213,28 +229,28 @@ const PostProject = () => {
                             }
                         </span>
                         <Input placeholder={'Short Description'} name={'short'} value={project.description.short}
-                               onChange={addProject}/>
+                               onChange={addProjectField}/>
                         <TextArea placeholder={'About Project'} name={'long'} value={project.description.long}
-                                  onChange={addProject}/>
+                                  onChange={addProjectField}/>
                     </Group>
                     
                     <Group name={'project state'}>
                         <div className={'snapshot'}>
                             <section style={{width: '100%'}}>
                                 <Input name={'web_url'} placeholder={'Website'}
-                                       value={project.website.web_url} onChange={addProject}/>
-                                <Select name={'domain'} options={domainList} onChange={addProject}
+                                       value={project.website.web_url} onChange={addProjectField}/>
+                                <Select name={'domain'} options={domainList} onChange={addProjectField}
                                         active={project.repository.domain}/>
                                 <Input name={'repo_url'} placeholder={'Repository Url'}
-                                       value={project.repository.repo_url} onChange={addProject}/>
+                                       value={project.repository.repo_url} onChange={addProjectField}/>
                                 <section>
                                     <Input placeholder={project.category || 'category'} name={'category'}
-                                           onChange={addProject}/>
-                                    <Select name={'completed'} onChange={addProject}
+                                           onChange={addProjectField}/>
+                                    <Select name={'completed'} onChange={addProjectField}
                                             options={
                                                 [
-                                                    {value: true, name: 'Completed'},
-                                                    {value: false, name: 'In Progress'}
+                                                    {value: 'true', name: 'Completed'},
+                                                    {value: '', name: 'In Progress'}
                                                 ]
                                             }
                                             active={project.completed.value}

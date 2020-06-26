@@ -5,13 +5,21 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ErrorBoundary from "./helpers/errorboundary";
 import ConstantProvider from "./UI/constants";
+import ApolloClient from "apollo-boost";
+import {ApolloProvider} from '@apollo/react-hooks';
+
+const client = new ApolloClient({
+    uri: 'http://localhost:3500/graphql'
+});
 
 
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary>
             <ConstantProvider>
-                <App/>
+                <ApolloProvider client={client}>
+                    <App/>
+                </ApolloProvider>
             </ConstantProvider>
         </ErrorBoundary>
     </React.StrictMode>,

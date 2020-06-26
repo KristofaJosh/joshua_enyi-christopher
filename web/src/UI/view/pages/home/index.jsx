@@ -54,19 +54,19 @@ const HomePage = () => {
                             
                             <section>
                                 {
-                                    worksData && worksData.slice(0, 5).map((el, index)=>(
-                                        <RecentWorks
-                                            key={index} id={index+1}
-                                            brief={el.name}
-                                            tag={'frontend/backend'}
-                                            onClick={
-                                                () => {
-                                                    dispatch({type: 'getWork', id: index});
-                                                    goto(index);
-                                                }
-                                            }
-                                        />
-                                    ))
+                                    // worksData && worksData.slice(0, 5).map((el, index)=>(
+                                    //     <RecentWorks
+                                    //         key={index} id={index+1}
+                                    //         brief={el.name}
+                                    //         tag={'frontend/backend'}
+                                    //         onClick={
+                                    //             () => {
+                                    //                 dispatch({type: 'getWork', id: index});
+                                    //                 goto(index);
+                                    //             }
+                                    //         }
+                                    //     />
+                                    // ))
                                 }
                             </section>
                         </Landing>

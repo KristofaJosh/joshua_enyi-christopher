@@ -1,50 +1,38 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import ContentTemplate from "../../template/content.template";
 import WorksTemplate from "../../template/works.template";
 import WorksCard from "../../../component/molecules/workcard";
-import axios from 'axios';
-import {logErrorToMyService} from "../../../../helpers/errorReport";
 import Placeholder from "../../../component/molecules/placeholder";
 import Text from "../../../component/atoms/typography";
 import StyleContext from "../../../context";
+import {useQuery} from "@apollo/react-hooks";
+
 
 const WorksPage = () => {
-    const {dispatch, store: {worksData}} = useContext(StyleContext);
+    const {Queries:{allProjects}} = useContext(StyleContext);
     
-    useEffect(() => {
-        axios({
-            method: 'GET',
-            url: 'https://chrisjoshportfolio.herokuapp.com/jobs/',
-            
-        }).then((resp) => {
-            dispatch({type: 'setWorks', data: resp.data});
-        }).catch((err) => logErrorToMyService(err))
-        // eslint-disable-next-line
-    }, []);
+    const {loading, data} = useQuery(allProjects);
     
     
     return (
         <ContentTemplate>
             <div>
                 <Text capitalize noBold heading margin={'1.5rem 0'}>
-                    all works
+                    Projects
                 </Text>
                 <WorksTemplate>
                     {
-                        worksData.length < 1 ?
-                            <Placeholder spread={6}/>
+                        loading ? <Placeholder spread={6}/>
                             :
-                            worksData.map((el, index) => (
+                            data.allProjects.map((el) => (
                                 <WorksCard
-                                    key={index}
-                                    id={index}
+                                    key={el.id}
+                                    id={el.id}
                                     name={el.name}
-                                    image={el.project_snapshot}
-                                    url={el.link}
-                                    repo_url={el.repository}
                                     tools={el.tools}
-                                    about={el.description}
-                                    completed={true}
+                                    website={el.website}
+                                    repository={el.repository}
+                                    completed={el.completed}
                                 />
                             ))
                     }

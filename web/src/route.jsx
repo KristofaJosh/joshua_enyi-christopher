@@ -5,7 +5,7 @@ const PrivateRoute = ({component: Component, authenticated, notAuth, ...routerPr
     return (
         <Route {...routerProps} render={(props) => authenticated === true ?
             <Component {...props} /> :
-            <Redirect to={{pathname: notAuth, state: {from: props.location}}}/>}/>
+            <Redirect to={{pathname: notAuth, state: {from: props.location}}} exact/>}/>
     )
 };
 
@@ -14,7 +14,7 @@ export const PublicRoute = ({component: Component, authenticated, onAuth, ...rou
         <Route {...routerProps}
                render={(props) => authenticated === false ?
                    <Component {...props} /> :
-                   <Redirect to={onAuth}/>}
+                   <Redirect to={onAuth} exact/>}
         />
     )
 };

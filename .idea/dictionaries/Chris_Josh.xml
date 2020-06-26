@@ -1,7 +1,10 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Chris Josh">
     <words>
+      <w>axios</w>
+      <w>dotenv</w>
       <w>graphiql</w>
+      <w>nodemailer</w>
     </words>
   </dictionary>
 </component>

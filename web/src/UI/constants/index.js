@@ -1,6 +1,7 @@
 import React, {useEffect, useReducer} from 'react';
 import {StyleProvider} from "../context";
 import {siteColors} from "./siteColors";
+import GraphQLFunctions from "./queries";
 
 
 const ConstantProvider = ({children}) => {
@@ -48,8 +49,9 @@ const ConstantProvider = ({children}) => {
         siteColors,
         store: state,
         dispatch: dispatch,
+        Queries: GraphQLFunctions.Queries,
+        Mutations: GraphQLFunctions.Mutations
     };
-    
     
     return (
         <StyleProvider value={Constant}>
