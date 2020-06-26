@@ -13,7 +13,7 @@ const Login = () => {
     const [logging, setLogging] = useState({loading: false, message: ''});
     const {dispatch, Queries: {login}} = useContext(StyleContext);
     
-    const {loading, error, data} = useQuery(login, {
+    const {error, data} = useQuery(login, {
         variables: {
             username: inputs.username,
             password: inputs.password
@@ -27,9 +27,8 @@ const Login = () => {
         event.preventDefault();
         setLogging({...logging, loading: true});
         
-        if (!loading) setLogging({...logging, loading: false});
-        
         if (data.login.state && data.login.token) {
+            setLogging({...logging, loading: false});
             dispatch({type: 'setToken', data: data.login})
         } else {
             setLogging({...logging, loading: false, message: data.login.message})

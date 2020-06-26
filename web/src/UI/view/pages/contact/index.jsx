@@ -54,6 +54,7 @@ const ContactPage = () => {
         const {name, email, message} = mail;
         
         if (name && email && message) {
+            
             if (message.length < 10) {
                 setErr({...err, m: 'words too few :-)', state: true});
                 setSendMessage({...sendMessage, loading: false});
@@ -66,7 +67,7 @@ const ContactPage = () => {
             }
             
             axios({
-                url: 'http://localhost:3500/send_mail',
+                url: process.env.NODE_ENV === "development" ? "http://localhost:8080/send_mail" : process.env.REACT_APP_API_ROUTE+'/send_mail',
                 method: 'POST',
                 data: mail,
             }).then((res) => {
@@ -92,6 +93,9 @@ const ContactPage = () => {
             setSendMessage({...sendMessage, loading: false});
             setErr({...err, m: 'you must fill all fields', state: true})
         }
+        
+        
+        
         
     };
     

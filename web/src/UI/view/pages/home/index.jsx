@@ -1,18 +1,22 @@
-import React, {useEffect} from 'react';
+import React, {useContext} from 'react';
 import {useHistory} from "react-router-dom";
 import styled from "styled-components";
 import img from './centerimage.png';
-import {StyleConsumer} from "../../../context";
+import StyleContext, {StyleConsumer} from "../../../context";
 import Socials from "../../../component/molecules/socials";
 import Footer from "../../../component/organisms/footer";
 import RecentWorks from "../../../component/organisms/recentworks";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Text from "../../../component/atoms/typography";
+import {useQuery} from "@apollo/react-hooks";
 
 AOS.init();
 
 const HomePage = () => {
+    const {Queries: {recentProjects}} = useContext(StyleContext);
+    
+    const {loading, data} = useQuery(recentProjects);
     
     const history = useHistory();
     
@@ -20,21 +24,18 @@ const HomePage = () => {
         history.push('/about_project', {id: id});
     };
     
-    useEffect(()=>{
-    
-    },[]);
     
     return (
         <StyleConsumer>
             {
-                ({siteColors, dispatch, store:{worksData}}) => (
+                ({siteColors}) => (
                     <>
                         <Landing {...siteColors}>
                             
                             <section>
                                 <Socials/>
                                 <div data-aos={"flip-right"} className={'name-and-title'}>
-                                    <p >JOSHUA CHRISTOPHER</p>
+                                    <p>JOSHUA CHRISTOPHER</p>
                                     <p style={{fontFamily: 'Inter'}}>Fullstack Developer</p>
                                 </div>
                                 
@@ -54,19 +55,14 @@ const HomePage = () => {
                             
                             <section>
                                 {
-                                    // worksData && worksData.slice(0, 5).map((el, index)=>(
-                                    //     <RecentWorks
-                                    //         key={index} id={index+1}
-                                    //         brief={el.name}
-                                    //         tag={'frontend/backend'}
-                                    //         onClick={
-                                    //             () => {
-                                    //                 dispatch({type: 'getWork', id: index});
-                                    //                 goto(index);
-                                    //             }
-                                    //         }
-                                    //     />
-                                    // ))
+                                    !loading && data.recentProjects.slice(0, 5).map((el, index) => (
+                                        <RecentWorks
+                                            key={el.id} id={index + 1}
+                                            brief={el.name}
+                                            tag={el.description.short}
+                                            onClick={() => goto(el.id)}
+                                        />
+                                    ))
                                 }
                             </section>
                         </Landing>

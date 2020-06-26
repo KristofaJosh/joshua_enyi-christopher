@@ -46,8 +46,8 @@ const RootQuery = new GraphQLObjectType({
         },
         recentProjects: {
             type: new GraphQLList(ProjectType),
-            resolve(parent, args) {
-                return Project.find({});
+            resolve: async (parent, args) => {
+                return await Project.find({}).sort({_id: -1});
             }
         }
     }

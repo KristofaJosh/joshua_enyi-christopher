@@ -8,8 +8,11 @@ import ConstantProvider from "./UI/constants";
 import ApolloClient from "apollo-boost";
 import {ApolloProvider} from '@apollo/react-hooks';
 
+let URL = process.env.NODE_ENV === "development" ? "http://localhost:8080/graphql" : process.env.REACT_APP_API_ROUTE+'/graphql';
+
+
 const client = new ApolloClient({
-    uri: 'http://localhost:3500/graphql'
+    uri: URL
 });
 
 

@@ -46,19 +46,10 @@ const PostProject = () => {
             resources, category, completed
         } = project;
         
-        // if (!name || !short || !long || !web_url || !snapshot) {
-        //     alert('Name, Description or Website snapshot is not loaded, may be missing an input');
-        //     return
-        // }
-        
-        if (resources.length > 0) {
-            let {describe, link, tag} = resources[resources.length - 1];
-            if (!describe && !link && !tag) {
-                // remove last empty input field
-                resources.pop();
-            }
+        if (!name || !short || !long || !web_url || !snapshot) {
+            alert('Name, Description or Website snapshot is not loaded, may be missing an input');
+            return
         }
-        
         
         try {
             setIsLoading(true);
@@ -70,39 +61,37 @@ const PostProject = () => {
                     tools: toolResolver(tools),
                     website: {url: web_url, snapshot: snapshot},
                     repository: {domain: domain, url: repo_url},
-                    resources: resources,
+                    resources: resources.filter(el => el.describe && el.link && el.tag ),
                     category: category,
                     completed: Boolean(completed),
                     token: "Bearer " + JSON.parse(localStorage.getItem('initialState')).token || ''
                 },
-            }).then(()=>{
+            }).then(() => {
                 setIsLoading(false);
                 setAlert({state: true, message: 'Project has been successfully added'});
-    
+                
                 // clear set mAlert
-                if(mAlert){
+                if (mAlert) {
                     setTimeout(() => {
                         setAlert({state: false, message: ''});
     
-                        // if (data) {
-                        //     setProject({
-                        //         name: '',
-                        //         description: {short: '', long: ''},
-                        //         tools: '',
-                        //         website: {web_url: '', snapshot: ''},
-                        //         repository: {domain: '', repo_url: ''},
-                        //         resources: [{describe: '', link: '', tag: ''}],
-                        //         category: '',
-                        //         completed: false
-                        //     });
-                        // }
+                        setProject({
+                            name: '',
+                            description: {short: '', long: ''},
+                            tools: '',
+                            website: {web_url: '', snapshot: ''},
+                            repository: {domain: '', repo_url: ''},
+                            resources: [{describe: '', link: '', tag: ''}],
+                            category: '',
+                            completed: false
+                        });
                         
-                    }, 2000);
+                    }, 3000);
                 }
-            }).catch((err)=>{
+            }).catch((err) => {
                 logErrorToMyService(err);
                 dispatch({type: 'clearToken'});
-    
+                
                 setTimeout(() => {
                     history.push('/auth', {message: 'session expired, Login again'});
                 }, 300);
@@ -113,10 +102,6 @@ const PostProject = () => {
         }
     };
     
-
-    
-    
-
     
     const logOut = () => {
         dispatch({type: 'clearToken'});

@@ -36,8 +36,8 @@ router.post('/send_mail', (req, res, next) => {
     
     const mail = {
         from: name,
-        to: 'christopherjoshua18@live.com',
-        bcc: 'christopherjoshua18@gmail.com, christopherjoshua25@hotmail.com',
+        to: process.env.EMAIL_TO,
+        bcc: process.env.EMAIL_BCC,
         subject: 'Message from Portfolio',
         text: content,
         attachment: [{path: file}],

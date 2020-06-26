@@ -84,11 +84,25 @@ const project = gql`
     }
 `;
 
+const recentProjects = gql`
+    query {
+        recentProjects {
+            id
+            name
+            description {
+                short
+            }
+        }
+    }
+
+`;
+
 const GraphQLFunctions = {
     Queries: {
         allProjects,
         login,
-        project
+        project,
+        recentProjects,
     },
     Mutations: {
         addProjectMutation,
